@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Публичная оферта — K-A-Q-S™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0B0F14;
+      color: #CBD5E1;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.75;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(11,15,20,.92);
+      backdrop-filter: blur(14px);
+      z-index: 10;
+    }
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #3B82F6;
+      text-decoration: none;
+    }
+    .back-link {
+      font-size: .8rem;
+      color: #4A5568;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .back-link:hover { color: #8A97A8; }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .doc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #4A5568;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
+      color: #F0F4F8;
+      letter-spacing: -.02em;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .doc-date {
+      font-size: .8rem;
+      color: #4A5568;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 36px;
+    }
+
+    .intro {
+      background: rgba(59,130,246,.06);
+      border: 1px solid rgba(59,130,246,.15);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: .88rem;
+      color: #8A97A8;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #F0F4F8;
+      margin-top: 40px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .sec-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      color: #3B82F6;
+      letter-spacing: .1em;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    p {
+      font-size: .9rem;
+      color: #8A97A8;
+      margin-bottom: 12px;
+      line-height: 1.75;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    .clause {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .clause-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: #4A5568;
+      flex-shrink: 0;
+      padding-top: 2px;
+      min-width: 32px;
+    }
+    .clause-text {
+      font-size: .9rem;
+      color: #8A97A8;
+      line-height: 1.75;
+    }
+    .clause-text strong { color: #CBD5E1; font-weight: 500; }
+
+    .requisites {
+      background: #0F141B;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 14px;
+    }
+    .req-row {
+      display: flex;
+      gap: 16px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: .85rem;
+    }
+    .req-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .req-key {
+      color: #4A5568;
+      width: 160px;
+      flex-shrink: 0;
+      font-size: .8rem;
+    }
+    .req-val { color: #CBD5E1; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 24px;
+      text-align: center;
+      font-size: .75rem;
+      color: #4A5568;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media (max-width: 480px) {
+      main { padding: 32px 18px 60px; }
+      .req-row { flex-direction: column; gap: 2px; }
+      .req-key { width: auto; }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      header { background: #fff; border-color: #e5e7eb; position: static; }
+      .logo { color: #2563EB; }
+      .back-link { display: none; }
+      h1, h2 { color: #111; }
+      h2 { border-color: #e5e7eb; }
+      .intro { background: #f0f7ff; border-color: #bfdbfe; }
+      .clause-text, p { color: #374151; }
+      .clause-num, .req-key { color: #9ca3af; }
+      .req-val { color: #111; }
+      .requisites { background: #f9fafb; border-color: #e5e7eb; }
+      footer { border-color: #e5e7eb; color: #9ca3af; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">K-A-Q-S™</a>
+  <a href="index.html" class="back-link">← На главную</a>
+</header>
+
+<main>
+  <p class="doc-label">// Юридический документ</p>
+  <h1>Публичная оферта на оказание консультационных услуг</h1>
+  <p class="doc-date">Редакция от 19 марта 2026 года</p>
+
+  <div class="intro">
+    Настоящий документ является публичной офертой Кузнецовой Карины Геннадьевны (самозанятый) и содержит все существенные условия договора на оказание консультационных услуг. Оплата услуги означает полное и безоговорочное принятие условий настоящей оферты.
+  </div>
+
+  <!-- 1 -->
+  <h2><span class="sec-num">01</span> Термины и определения</h2>
+  <div class="clause"><span class="clause-num">1.1</span><span class="clause-text"><strong>Исполнитель</strong> — Кузнецова Карина Геннадьевна, самозанятый, ИНН 641305221167.</span></div>
+  <div class="clause"><span class="clause-num">1.2</span><span class="clause-text"><strong>Заказчик</strong> — физическое или юридическое лицо, акцептовавшее настоящую оферту путём оплаты услуги.</span></div>
+  <div class="clause"><span class="clause-num">1.3</span><span class="clause-text"><strong>Услуга</strong> — «Персональный Roadmap на 90 дней» — консультационный документ в формате PDF, разработанный на основе результатов диагностики управляемости бизнеса K-A-Q-S™.</span></div>
+  <div class="clause"><span class="clause-num">1.4</span><span class="clause-text"><strong>Акцепт</strong> — полное принятие условий оферты путём оплаты услуги в установленном размере.</span></div>
+  <div class="clause"><span class="clause-num">1.5</span><span class="clause-text"><strong>Сайт</strong> — интернет-ресурс Исполнителя, через который осуществляется доступ к диагностике и услуге.</span></div>
+
+  <!-- 2 -->
+  <h2><span class="sec-num">02</span> Предмет договора</h2>
+  <div class="clause"><span class="clause-num">2.1</span><span class="clause-text">Исполнитель обязуется предоставить Заказчику «Персональный Roadmap на 90 дней» — структурированный план повышения управляемости бизнеса по четырём осям методологии K-A-Q-S™ (знания, автоматизация, качество, масштаб) на основании результатов пройденной Заказчиком диагностики.</span></div>
+  <div class="clause"><span class="clause-num">2.2</span><span class="clause-text">Услуга оказывается в дистанционном формате. Результат передаётся Заказчику в виде PDF-документа на электронный адрес, указанный при прохождении диагностики.</span></div>
+  <div class="clause"><span class="clause-num">2.3</span><span class="clause-text">Roadmap содержит конкретные рекомендации, чеклисты и шаблоны для самостоятельного выполнения Заказчиком. Исполнитель не осуществляет сопровождение или контроль внедрения в рамках данной услуги.</span></div>
+
+  <!-- 3 -->
+  <h2><span class="sec-num">03</span> Стоимость и порядок оплаты</h2>
+  <div class="clause"><span class="clause-num">3.1</span><span class="clause-text">Стоимость услуги составляет <strong>7 990 (семь тысяч девятьсот девяносто) рублей</strong>.</span></div>
+  <div class="clause"><span class="clause-num">3.2</span><span class="clause-text">Оплата производится единовременно, в полном объёме, до начала оказания услуги.</span></div>
+  <div class="clause"><span class="clause-num">3.3</span><span class="clause-text">Оплата осуществляется посредством платёжного сервиса Prodamus через форму на сайте. Принимаются банковские карты, СБП и другие способы, доступные в платёжной форме.</span></div>
+  <div class="clause"><span class="clause-num">3.4</span><span class="clause-text">Договор считается заключённым с момента поступления оплаты на счёт Исполнителя.</span></div>
+  <div class="clause"><span class="clause-num">3.5</span><span class="clause-text">Исполнитель применяет налоговый режим «Налог на профессиональный доход». НДС не облагается. Чек формируется автоматически и направляется Заказчику.</span></div>
+
+  <!-- 4 -->
+  <h2><span class="sec-num">04</span> Порядок оказания услуги</h2>
+  <div class="clause"><span class="clause-num">4.1</span><span class="clause-text">После подтверждения оплаты Исполнитель формирует Roadmap на основании результатов диагностики Заказчика.</span></div>
+  <div class="clause"><span class="clause-num">4.2</span><span class="clause-text">Срок передачи готового документа — <strong>не более 3 рабочих дней</strong> с момента поступления оплаты.</span></div>
+  <div class="clause"><span class="clause-num">4.3</span><span class="clause-text">Документ направляется на email-адрес, указанный Заказчиком при прохождении диагностики. Заказчик обязан указать корректный email-адрес.</span></div>
+  <div class="clause"><span class="clause-num">4.4</span><span class="clause-text">Услуга считается оказанной с момента отправки документа на email Заказчика.</span></div>
+
+  <!-- 5 -->
+  <h2><span class="sec-num">05</span> Права и обязанности сторон</h2>
+  <div class="clause"><span class="clause-num">5.1</span><span class="clause-text">Исполнитель обязуется: предоставить услугу в установленный срок; обеспечить конфиденциальность данных Заказчика; отвечать на вопросы Заказчика по существу оказанной услуги в течение 5 рабочих дней.</span></div>
+  <div class="clause"><span class="clause-num">5.2</span><span class="clause-text">Заказчик обязуется: оплатить услугу в полном объёме; предоставить корректные контактные данные; использовать полученный документ только в личных целях.</span></div>
+  <div class="clause"><span class="clause-num">5.3</span><span class="clause-text">Заказчик не вправе передавать, копировать, публиковать или перепродавать полученный документ третьим лицам без письменного согласия Исполнителя.</span></div>
+
+  <!-- 6 -->
+  <h2><span class="sec-num">06</span> Возврат денежных средств</h2>
+  <div class="clause"><span class="clause-num">6.1</span><span class="clause-text">Заказчик вправе отказаться от услуги и получить полный возврат средств до момента передачи готового документа.</span></div>
+  <div class="clause"><span class="clause-num">6.2</span><span class="clause-text">После передачи документа возврат не производится, поскольку услуга считается оказанной в полном объёме.</span></div>
+  <div class="clause"><span class="clause-num">6.3</span><span class="clause-text">Для отказа от услуги Заказчик направляет письмо на email Исполнителя: <strong>miss.kuznetsov@mail.ru</strong>. Возврат осуществляется в течение 10 рабочих дней.</span></div>
+
+  <!-- 7 -->
+  <h2><span class="sec-num">07</span> Конфиденциальность и персональные данные</h2>
+  <div class="clause"><span class="clause-num">7.1</span><span class="clause-text">Исполнитель обязуется не передавать персональные данные и результаты диагностики Заказчика третьим лицам без его согласия.</span></div>
+  <div class="clause"><span class="clause-num">7.2</span><span class="clause-text">Акцептуя оферту, Заказчик даёт согласие на обработку своих персональных данных (имя, email, результаты диагностики) исключительно в целях оказания услуги.</span></div>
+  <div class="clause"><span class="clause-num">7.3</span><span class="clause-text">Данные хранятся на устройствах Исполнителя и не передаются третьим лицам, за исключением платёжного сервиса Prodamus в объёме, необходимом для проведения платежа.</span></div>
+
+  <!-- 8 -->
+  <h2><span class="sec-num">08</span> Ответственность и ограничения</h2>
+  <div class="clause"><span class="clause-num">8.1</span><span class="clause-text">Исполнитель несёт ответственность за передачу услуги в установленный срок и за качество содержания документа.</span></div>
+  <div class="clause"><span class="clause-num">8.2</span><span class="clause-text">Исполнитель не гарантирует конкретный финансовый или операционный результат от применения рекомендаций — результат зависит от действий самого Заказчика.</span></div>
+  <div class="clause"><span class="clause-num">8.3</span><span class="clause-text">Максимальная ответственность Исполнителя ограничена суммой оплаченной услуги.</span></div>
+
+  <!-- 9 -->
+  <h2><span class="sec-num">09</span> Разрешение споров</h2>
+  <div class="clause"><span class="clause-num">9.1</span><span class="clause-text">Все споры решаются путём переговоров. Для этого Заказчик направляет претензию на email <strong>miss.kuznetsov@mail.ru</strong>. Срок ответа — 10 рабочих дней.</span></div>
+  <div class="clause"><span class="clause-num">9.2</span><span class="clause-text">При невозможности урегулировать спор в досудебном порядке он передаётся на рассмотрение суда по месту нахождения Исполнителя в соответствии с законодательством РФ.</span></div>
+
+  <!-- 10 -->
+  <h2><span class="sec-num">10</span> Реквизиты исполнителя</h2>
+  <div class="requisites">
+    <div class="req-row"><span class="req-key">Исполнитель</span><span class="req-val">Кузнецова Карина Геннадьевна</span></div>
+    <div class="req-row"><span class="req-key">Статус</span><span class="req-val">Самозанятый</span></div>
+    <div class="req-row"><span class="req-key">ИНН</span><span class="req-val">641305221167</span></div>
+    <div class="req-row"><span class="req-key">Email</span><span class="req-val">miss.kuznetsov@mail.ru</span></div>
+    <div class="req-row"><span class="req-key">Телефон</span><span class="req-val">+7 909 338 53 87</span></div>
+  </div>
+
+</main>
+
+<footer>
+  K-A-Q-S™ · Публичная оферта · Редакция от 19.03.2026
+</footer>
+
+</body>
+</html>
