@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Политика конфиденциальности — K-A-Q-S™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0B0F14;
+      color: #CBD5E1;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.75;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: rgba(11,15,20,.92);
+      backdrop-filter: blur(14px);
+      z-index: 10;
+    }
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #3B82F6;
+      text-decoration: none;
+    }
+    .back-link {
+      font-size: .8rem;
+      color: #4A5568;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .back-link:hover { color: #8A97A8; }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .doc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #4A5568;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
+      color: #F0F4F8;
+      letter-spacing: -.02em;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .doc-date {
+      font-size: .8rem;
+      color: #4A5568;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 36px;
+    }
+
+    .intro {
+      background: rgba(59,130,246,.06);
+      border: 1px solid rgba(59,130,246,.15);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: .88rem;
+      color: #8A97A8;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #F0F4F8;
+      margin-top: 40px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .sec-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      color: #3B82F6;
+      letter-spacing: .1em;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    p {
+      font-size: .9rem;
+      color: #8A97A8;
+      margin-bottom: 12px;
+      line-height: 1.75;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    .clause {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .clause-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: #4A5568;
+      flex-shrink: 0;
+      padding-top: 2px;
+      min-width: 32px;
+    }
+    .clause-text {
+      font-size: .9rem;
+      color: #8A97A8;
+      line-height: 1.75;
+    }
+    .clause-text strong { color: #CBD5E1; font-weight: 500; }
+    .clause-text a { color: #3B82F6; text-decoration: none; }
+    .clause-text a:hover { text-decoration: underline; }
+
+    .data-table {
+      background: #0F141B;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 14px 0;
+    }
+    .data-row {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1.4fr;
+      gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: .82rem;
+    }
+    .data-row:last-child { border-bottom: none; }
+    .data-row.header-row {
+      background: rgba(255,255,255,.03);
+    }
+    .data-cell {
+      padding: 10px 14px;
+      color: #8A97A8;
+      border-right: 1px solid rgba(255,255,255,.04);
+      line-height: 1.5;
+    }
+    .data-cell:last-child { border-right: none; }
+    .data-row.header-row .data-cell {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #4A5568;
+    }
+    @media (max-width: 500px) {
+      .data-row { grid-template-columns: 1fr; }
+      .data-cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,.04); }
+      .data-cell:last-child { border-bottom: none; }
+    }
+
+    .rights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    @media (max-width: 500px) { .rights-grid { grid-template-columns: 1fr; } }
+    .right-item {
+      background: #0F141B;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: .82rem;
+      color: #8A97A8;
+      line-height: 1.5;
+    }
+    .right-item strong { color: #CBD5E1; font-weight: 500; display: block; margin-bottom: 3px; }
+
+    .contact-block {
+      background: #0F141B;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 10px;
+      font-size: .85rem;
+    }
+    .contact-row {
+      display: flex;
+      gap: 12px;
+      padding: 4px 0;
+      align-items: baseline;
+    }
+    .contact-key {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem;
+      color: #4A5568;
+      width: 110px;
+      flex-shrink: 0;
+    }
+    .contact-val { color: #CBD5E1; }
+    .contact-val a { color: #3B82F6; text-decoration: none; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 24px;
+      text-align: center;
+      font-size: .72rem;
+      color: #4A5568;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      header { background: #fff; border-color: #e5e7eb; position: static; }
+      .logo { color: #2563EB; }
+      .back-link { display: none; }
+      h1, h2 { color: #111; }
+      .intro { background: #f0f7ff; border-color: #bfdbfe; }
+      .clause-text, p { color: #374151; }
+      .clause-num, .contact-key { color: #9ca3af; }
+      .data-table, .contact-block { background: #f9fafb; border-color: #e5e7eb; }
+      .data-row.header-row { background: #f3f4f6; }
+      footer { border-color: #e5e7eb; color: #9ca3af; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">K-A-Q-S™</a>
+  <a href="index.html" class="back-link">← На главную</a>
+</header>
+
+<main>
+
+  <p class="doc-label">// Юридический документ</p>
+  <h1>Политика конфиденциальности</h1>
+  <p class="doc-date">Редакция от 19 марта 2026 года</p>
+
+  <div class="intro">
+    Настоящая политика объясняет, какие данные собирает сервис K-A-Q-S™, как они используются и как вы можете ими управлять. Мы не продаём и не передаём ваши данные третьим лицам в коммерческих целях.
+  </div>
+
+  <!-- 1 -->
+  <h2><span class="sec-num">01</span> Кто обрабатывает данные</h2>
+  <div class="clause"><span class="clause-num">1.1</span><span class="clause-text">Оператором персональных данных является <strong>Кузнецова Карина Геннадьевна</strong>, самозанятый, ИНН 641305221167.</span></div>
+  <div class="clause"><span class="clause-num">1.2</span><span class="clause-text">Контактный email: <a href="mailto:miss.kuznetsov@mail.ru">miss.kuznetsov@mail.ru</a>.</span></div>
+
+  <!-- 2 -->
+  <h2><span class="sec-num">02</span> Какие данные мы собираем</h2>
+
+  <div class="data-table">
+    <div class="data-row header-row">
+      <div class="data-cell">Данные</div>
+      <div class="data-cell">Когда собирается</div>
+      <div class="data-cell">Зачем</div>
+    </div>
+    <div class="data-row">
+      <div class="data-cell">Имя</div>
+      <div class="data-cell">При заполнении формы в квизе</div>
+      <div class="data-cell">Персонализация отчёта</div>
+    </div>
+    <div class="data-row">
+      <div class="data-cell">Email-адрес</div>
+      <div class="data-cell">При заполнении формы в квизе</div>
+      <div class="data-cell">Отправка результатов и Roadmap</div>
+    </div>
+    <div class="data-row">
+      <div class="data-cell">Результаты диагностики</div>
+      <div class="data-cell">После прохождения квиза</div>
+      <div class="data-cell">Формирование отчёта и Roadmap</div>
+    </div>
+    <div class="data-row">
+      <div class="data-cell">Данные платежа</div>
+      <div class="data-cell">При оплате через Prodamus</div>
+      <div class="data-cell">Проведение транзакции (обрабатывает Prodamus)</div>
+    </div>
+    <div class="data-row">
+      <div class="data-cell">Данные браузера (localStorage)</div>
+      <div class="data-cell">Автоматически при прохождении квиза</div>
+      <div class="data-cell">Сохранение результатов для повторного прохождения</div>
+    </div>
+  </div>
+
+  <div class="clause" style="margin-top:14px"><span class="clause-num">2.1</span><span class="clause-text">Мы не собираем cookies для отслеживания поведения, не используем рекламные трекеры и не подключаем системы аналитики третьих сторон.</span></div>
+  <div class="clause"><span class="clause-num">2.2</span><span class="clause-text">Результаты диагностики хранятся только в localStorage вашего браузера — на устройстве пользователя. На наших серверах они не сохраняются до момента оплаты и отправки заявки.</span></div>
+
+  <!-- 3 -->
+  <h2><span class="sec-num">03</span> Как мы используем данные</h2>
+  <div class="clause"><span class="clause-num">3.1</span><span class="clause-text">Имя и email используются исключительно для: отправки результатов диагностики, доставки Roadmap после оплаты, ответа на запросы пользователя.</span></div>
+  <div class="clause"><span class="clause-num">3.2</span><span class="clause-text">Мы не рассылаем рекламные письма без явного согласия. Единственные письма, которые вы получите — это результаты диагностики и приобретённый документ.</span></div>
+  <div class="clause"><span class="clause-num">3.3</span><span class="clause-text">Данные не передаются третьим лицам, за исключением платёжного сервиса <strong>Prodamus</strong> — в объёме, необходимом для проведения платежа и выдачи чека.</span></div>
+
+  <!-- 4 -->
+  <h2><span class="sec-num">04</span> Хранение и защита данных</h2>
+  <div class="clause"><span class="clause-num">4.1</span><span class="clause-text">Персональные данные хранятся на защищённых устройствах оператора. Доступ к ним имеет только оператор.</span></div>
+  <div class="clause"><span class="clause-num">4.2</span><span class="clause-text">Данные хранятся не дольше, чем необходимо для оказания услуги — как правило, не более 1 года с момента получения.</span></div>
+  <div class="clause"><span class="clause-num">4.3</span><span class="clause-text">Передача данных при оплате осуществляется по защищённому протоколу HTTPS через платёжную платформу Prodamus.</span></div>
+
+  <!-- 5 -->
+  <h2><span class="sec-num">05</span> Ваши права</h2>
+  <div class="rights-grid">
+    <div class="right-item"><strong>Доступ</strong>Запросить, какие данные о вас хранятся</div>
+    <div class="right-item"><strong>Исправление</strong>Попросить исправить неточные данные</div>
+    <div class="right-item"><strong>Удаление</strong>Потребовать удалить ваши данные</div>
+    <div class="right-item"><strong>Отзыв согласия</strong>Отозвать согласие на обработку в любой момент</div>
+  </div>
+  <div class="clause" style="margin-top:14px"><span class="clause-num">5.1</span><span class="clause-text">Для реализации любого из прав направьте запрос на <a href="mailto:miss.kuznetsov@mail.ru">miss.kuznetsov@mail.ru</a>. Ответ — в течение 10 рабочих дней.</span></div>
+
+  <!-- 6 -->
+  <h2><span class="sec-num">06</span> Cookies и localStorage</h2>
+  <div class="clause"><span class="clause-num">6.1</span><span class="clause-text">Сайт использует <strong>localStorage</strong> браузера для сохранения результатов диагностики на вашем устройстве. Это позволяет пройти квиз повторно и сравнить прогресс. Данные не покидают ваше устройство.</span></div>
+  <div class="clause"><span class="clause-num">6.2</span><span class="clause-text">Технические cookies для работы сайта могут устанавливаться платформой Vercel (хостинг). Эти данные не идентифицируют вас лично.</span></div>
+  <div class="clause"><span class="clause-num">6.3</span><span class="clause-text">Вы можете очистить localStorage в любой момент через настройки браузера. Это удалит сохранённые результаты диагностики с вашего устройства.</span></div>
+
+  <!-- 7 -->
+  <h2><span class="sec-num">07</span> Изменения политики</h2>
+  <div class="clause"><span class="clause-num">7.1</span><span class="clause-text">Мы можем обновлять настоящую политику. Дата последнего изменения указана вверху документа. Продолжение использования сайта после изменений означает согласие с новой редакцией.</span></div>
+
+  <!-- 8 -->
+  <h2><span class="sec-num">08</span> Контакты</h2>
+  <div class="contact-block">
+    <div class="contact-row">
+      <span class="contact-key">Оператор</span>
+      <span class="contact-val">Кузнецова Карина Геннадьевна</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-key">ИНН</span>
+      <span class="contact-val">641305221167</span>
+    </div>
+    <div class="contact-row">
+      <span class="contact-key">Email</span>
+      <span class="contact-val"><a href="mailto:miss.kuznetsov@mail.ru">miss.kuznetsov@mail.ru</a></span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  K-A-Q-S™ · Политика конфиденциальности · Редакция от 19.03.2026
+</footer>
+
+</body>
+</html>
