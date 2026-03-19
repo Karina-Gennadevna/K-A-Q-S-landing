@@ -137,23 +137,28 @@
     .clause-text strong { color: #CBD5E1; font-weight: 500; }
 
     .requisites {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 6px;
       background: #0F141B;
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 8px;
-      padding: 12px 16px;
+      padding: 14px 18px;
       margin-top: 10px;
     }
     .req-row {
       display: flex;
-      gap: 12px;
-      padding: 4px 0;
+      gap: 16px;
       font-size: .82rem;
+      align-items: baseline;
     }
     .req-key {
       color: #4A5568;
-      width: 130px;
+      width: 110px;
       flex-shrink: 0;
-      font-size: .78rem;
+      font-size: .75rem;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: .03em;
     }
     .req-val { color: #CBD5E1; }
 
