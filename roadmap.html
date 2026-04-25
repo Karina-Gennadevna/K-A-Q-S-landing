@@ -399,22 +399,42 @@
       border-bottom: 1px solid var(--line);
     }
     .section:last-child { border-bottom: none; }
-    .section-num {
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-family: var(--mono);
-      font-size: .6rem;
+      font-size: .56rem;
       font-weight: 600;
       letter-spacing: .2em;
       color: var(--blue);
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--blue);
+      flex-shrink: 0;
     }
     .section-title {
-      font-size: 1.35rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 700;
       color: var(--text1);
-      letter-spacing: -.02em;
+      letter-spacing: -.03em;
       margin-bottom: 32px;
     }
+    .section-head-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .section-head-row .section-title { margin-bottom: 0; }
 
     /* ── AXIS BARS ── */
     .axis-grid {
@@ -549,164 +569,126 @@
       line-height: 1.55;
     }
 
-    /* ── MONTH PLAN ── */
-    .month-block {
-      margin-bottom: 48px;
-    }
-    .month-block:last-child { margin-bottom: 0; }
-    .month-header {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 20px;
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-    }
-    .month-num-block {
-      background: var(--blue-dim);
-      border-right: 1px solid rgba(59,130,246,.15);
-      padding: 18px 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-    .month-num-label {
-      font-family: var(--mono);
-      font-size: .55rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--blue);
-      opacity: .7;
-    }
-    .month-num-digit {
-      font-family: var(--mono);
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--blue);
-      line-height: 1;
-    }
-    .month-theme {
-      font-size: .95rem;
-      font-weight: 600;
-      color: var(--text1);
-      padding: 18px 22px;
-      line-height: 1.3;
-    }
-    .month-tasks {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    @media (max-width: 580px) { .month-tasks { grid-template-columns: 1fr; } }
-    .task-card {
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-    .task-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-    }
-    .task-card.tc-K::before { background: #60A5FA; }
-    .task-card.tc-A::before { background: #C084FC; }
-    .task-card.tc-Q::before { background: #4ADE80; }
-    .task-card.tc-S::before { background: #FCD34D; }
-    .task-card-top {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .task-axis-icon {
-      font-family: var(--mono);
-      font-size: .75rem;
-      font-weight: 700;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    /* ── MONTH TABS ── */
     .tag-K { background: rgba(59,130,246,.12); color: #60A5FA; }
     .tag-A { background: rgba(168,85,247,.12); color: #C084FC; }
     .tag-Q { background: rgba(34,197,94,.12); color: #4ADE80; }
     .tag-S { background: rgba(245,158,11,.12); color: #FCD34D; }
-    .task-axis-name {
-      font-size: .72rem;
-      color: var(--text4);
-      font-weight: 500;
-    }
-    .task-action {
-      font-size: .84rem;
-      font-weight: 500;
-      color: var(--text1);
-      line-height: 1.45;
-      flex: 1;
-    }
-    .task-impact {
-      font-size: .75rem;
-      color: var(--text3);
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 6px;
-      padding: 6px 10px;
-      line-height: 1.4;
-    }
-    .task-impact::before { content: '→ '; color: var(--text4); }
 
-    /* ── 3-COL PLAN GRID ── */
-    .plan-grid {
+    .month-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .month-tab {
+      font-family: var(--mono);
+      font-size: .64rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 9px 22px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text4);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .month-tab.active {
+      background: var(--text1);
+      color: #0B0F14;
+      border-color: var(--text1);
+    }
+    .month-tab:hover:not(.active) { color: var(--text2); border-color: rgba(255,255,255,.2); }
+
+    .month-panel { display: none; }
+    .month-panel.active {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: 1fr 260px;
+      gap: 20px;
       align-items: start;
     }
-    @media (max-width: 680px) { .plan-grid { grid-template-columns: 1fr; } }
-    .plan-col {
+    @media (max-width: 680px) { .month-panel.active { grid-template-columns: 1fr; } }
+
+    .month-task-list { display: flex; flex-direction: column; gap: 10px; }
+    .month-task-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
       background: var(--bg2);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
+      border-radius: 12px;
+      padding: 16px 18px;
+      transition: border-color .2s;
     }
-    .plan-col-head {
-      padding: 16px 18px 14px;
-      border-bottom: 1px solid var(--line);
-      background: var(--bg3);
+    .month-task-item:hover { border-color: rgba(255,255,255,.12); }
+    .month-task-num {
+      font-family: var(--mono);
+      font-size: .6rem;
+      font-weight: 600;
+      color: var(--text4);
+      padding-top: 3px;
+      flex-shrink: 0;
+      width: 20px;
     }
-    .plan-col-num {
+    .month-task-body { flex: 1; }
+    .month-task-axis {
       font-family: var(--mono);
       font-size: .58rem;
       font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--blue);
+      letter-spacing: .08em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 7px;
+    }
+    .month-task-action {
+      font-size: .86rem;
+      font-weight: 500;
+      color: var(--text1);
+      line-height: 1.45;
       margin-bottom: 5px;
     }
-    .plan-col-theme {
-      font-size: .86rem;
+    .month-task-impact {
+      font-size: .75rem;
+      color: var(--text3);
+    }
+    .month-task-impact::before { content: '→ '; color: var(--text4); }
+
+    .month-result-card {
+      background: var(--bg3);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 14px;
+      padding: 22px;
+      position: sticky;
+      top: 72px;
+    }
+    .month-result-crown {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+    .month-result-label {
+      font-family: var(--mono);
+      font-size: .54rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .month-result-title {
+      font-size: .95rem;
       font-weight: 700;
       color: var(--text1);
-      line-height: 1.3;
+      line-height: 1.4;
+      margin-bottom: 14px;
     }
-    .plan-col-tasks {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .month-result-axes { display: flex; gap: 6px; flex-wrap: wrap; }
+    .mra {
+      font-family: var(--mono);
+      font-size: .58rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 4px;
     }
 
     /* ── TEMPLATES ── */
@@ -1203,7 +1185,7 @@
 
   <!-- 01 ДИАГНОСТИКА -->
   <div class="section">
-    <div class="section-num">01</div>
+    <div class="section-eyebrow">Системный аудит</div>
     <div class="section-title">Диагностический профиль</div>
     <div class="axis-grid" id="axis-grid"></div>
     <div class="profile-card" id="profile-card">
@@ -1217,21 +1199,24 @@
 
   <!-- 02 КРАСНЫЕ ЗОНЫ -->
   <div class="section">
-    <div class="section-num">02</div>
-    <div class="section-title">Красные зоны — приоритет №1</div>
+    <div class="section-eyebrow">Критические уязвимости</div>
+    <div class="section-title">Красные зоны бизнеса</div>
     <div class="red-zones" id="red-zones"></div>
   </div>
 
   <!-- 03 ПЛАН -->
   <div class="section">
-    <div class="section-num">03</div>
-    <div class="section-title">Roadmap на 90 дней</div>
+    <div class="section-eyebrow">Executive Strategy Map</div>
+    <div class="section-head-row">
+      <div class="section-title">Roadmap на 90 дней</div>
+      <div class="month-tabs" id="month-tabs"></div>
+    </div>
     <div id="plan-container"></div>
   </div>
 
   <!-- 04 ИНСТРУМЕНТЫ -->
   <div class="section">
-    <div class="section-num">04</div>
+    <div class="section-eyebrow">Системный арсенал</div>
     <div class="section-title">Инструменты и шаблоны</div>
     <div class="templates-grid" id="templates-grid"></div>
     <div class="owner-section-label">Owner-уровень — включено в ваш пакет</div>
@@ -1473,34 +1458,48 @@ function renderRoadmap() {
       </div>`
   })
 
-  // Plan — 3-column grid
+  // Plan — tabbed months
   const planEl = document.getElementById('plan-container')
-  planEl.className = 'plan-grid'
+  const tabsEl = document.getElementById('month-tabs')
+  planEl.className = ''
   planEl.innerHTML = ''
+  tabsEl.innerHTML = ''
   const months = [
-    { num: '01', label: 'Месяц 1', data: r.month1 },
-    { num: '02', label: 'Месяц 2', data: r.month2 },
-    { num: '03', label: 'Месяц 3', data: r.month3 },
+    { num: '01', data: r.month1 },
+    { num: '02', data: r.month2 },
+    { num: '03', data: r.month3 },
   ]
   months.forEach((m, mi) => {
     if (!m.data) return
-    const tasks = (m.data.tasks || []).map(t => `
-      <div class="task-card tc-${t.axis}">
-        <div class="task-card-top">
-          <div class="task-axis-icon tag-${t.axis}">${t.axis}</div>
-          <div class="task-axis-name">${AXIS_NAMES[t.axis]}</div>
+    // Tab button
+    const tab = document.createElement('button')
+    tab.className = 'month-tab' + (mi === 0 ? ' active' : '')
+    tab.textContent = 'Месяц ' + m.num
+    tab.onclick = () => switchTab(mi)
+    tabsEl.appendChild(tab)
+    // Panel
+    const tasks = (m.data.tasks || []).map((t, ti) => `
+      <div class="month-task-item">
+        <div class="month-task-num">0${ti + 1}</div>
+        <div class="month-task-body">
+          <div class="month-task-axis tag-${t.axis}">${t.axis} · ${AXIS_NAMES[t.axis]}</div>
+          <div class="month-task-action">${t.action}</div>
+          <div class="month-task-impact">${t.impact}</div>
         </div>
-        <div class="task-action">${t.action}</div>
-        <div class="task-impact">${t.impact}</div>
       </div>`).join('')
-    planEl.innerHTML += `
-      <div class="plan-col">
-        <div class="plan-col-head">
-          <div class="plan-col-num">Месяц ${m.num}</div>
-          <div class="plan-col-theme">${m.data.theme || ''}</div>
-        </div>
-        <div class="plan-col-tasks">${tasks}</div>
+    const axes = (m.data.tasks || []).map(t =>
+      `<span class="mra tag-${t.axis}">${t.axis}</span>`).join('')
+    const panel = document.createElement('div')
+    panel.className = 'month-panel' + (mi === 0 ? ' active' : '')
+    panel.innerHTML = `
+      <div class="month-task-list">${tasks}</div>
+      <div class="month-result-card">
+        <div class="month-result-crown">👑</div>
+        <div class="month-result-label">Фокус месяца</div>
+        <div class="month-result-title">${m.data.theme || ''}</div>
+        <div class="month-result-axes">${axes}</div>
       </div>`
+    planEl.appendChild(panel)
   })
 
   // Templates
@@ -1588,6 +1587,11 @@ function retryGenerate() {
 }
 
 let currentModalId = null
+
+function switchTab(n) {
+  document.querySelectorAll('.month-tab').forEach((t, i) => t.classList.toggle('active', i === n))
+  document.querySelectorAll('.month-panel').forEach((p, i) => p.classList.toggle('active', i === n))
+}
 
 function openModal(id) {
   const t = TEMPLATE_CATALOG[id]
