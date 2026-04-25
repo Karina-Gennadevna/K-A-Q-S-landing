@@ -11,16 +11,60 @@ module.exports = async function handler(req, res) {
   const { name, index, scores } = req.body || {}
   if (!scores || typeof index !== 'number') return res.status(400).json({ error: 'Missing data' })
 
-  const prompt = `Ты — консультант по системному управлению бизнесом. Создай персональный Roadmap на 90 дней.
+  const prompt = `You are a business management consultant. Generate a 90-day roadmap based on K-AQS diagnostic results.
 
-ДИАГНОСТИКА ${name || 'Руководителя'}: индекс ${index}/100. K=${scores.K}% A=${scores.A}% Q=${scores.Q}% S=${scores.S}%
-Шкала: 0-39 критично, 40-59 слабо, 60-79 средне, 80-100 сильно.
-K=процессы/SOP/метрики, A=автоматизация/AI/рутины, Q=KPI/контроль/качество, S=финансы/найм/рост.
+Client: ${name || 'Owner'}, Index: ${index}/100, K=${scores.K}%, A=${scores.A}%, Q=${scores.Q}%, S=${scores.S}%
+Scale: 0-39 critical, 40-59 weak, 60-79 medium, 80-100 strong.
+K=knowledge/processes/SOP, A=automation/AI/tools, Q=quality/KPI/control, S=scale/finance/hiring.
 
-Верни ТОЛЬКО JSON (без markdown, без пояснений):
-{"summary":"2 предложения об общем состоянии бизнеса","profile":"2-3 слова профиль руководителя","redZones":[{"title":"проблема 1","description":"почему критично"},{"title":"проблема 2","description":"почему критично"},{"title":"проблема 3","description":"почему критично"}],"month1":{"theme":"фокус месяца 1","tasks":[{"action":"действие","axis":"K","impact":"результат"},{"action":"действие","axis":"A","impact":"результат"},{"action":"действие","axis":"Q","impact":"результат"},{"action":"действие","axis":"S","impact":"результат"}]},"month2":{"theme":"фокус месяца 2","tasks":[{"action":"действие","axis":"A","impact":"результат"},{"action":"действие","axis":"K","impact":"результат"},{"action":"действие","axis":"Q","impact":"результат"},{"action":"действие","axis":"S","impact":"результат"}]},"month3":{"theme":"фокус месяца 3","tasks":[{"action":"действие","axis":"S","impact":"результат"},{"action":"действие","axis":"A","impact":"результат"},{"action":"действие","axis":"Q","impact":"результат"},{"action":"действие","axis":"K","impact":"результат"}]},"axisInsights":{"K":"рекомендация по K","A":"рекомендация по A","Q":"рекомендация по Q","S":"рекомендация по S"},"templates":["K_registry","A_audit"]}
+Return ONLY valid JSON, no markdown, no comments, no trailing commas. Use Russian language for all text values.
 
-Замени все значения на конкретные для данного клиента. Для templates выбери 2-3 из: K_registry K_sop K_metrics K_onboard A_audit A_roi A_tools A_checklist Q_kpi Q_risks Q_errors Q_checkpoints S_pl S_cashflow S_raci S_hire — только для осей ниже 60%.`
+Required structure:
+{
+  "summary": "2 sentences about business state",
+  "profile": "2-3 word manager profile",
+  "redZones": [
+    {"title": "problem name", "description": "why critical"},
+    {"title": "problem name", "description": "why critical"},
+    {"title": "problem name", "description": "why critical"}
+  ],
+  "month1": {
+    "theme": "month focus name",
+    "tasks": [
+      {"action": "specific action", "axis": "K", "impact": "result"},
+      {"action": "specific action", "axis": "A", "impact": "result"},
+      {"action": "specific action", "axis": "Q", "impact": "result"},
+      {"action": "specific action", "axis": "S", "impact": "result"}
+    ]
+  },
+  "month2": {
+    "theme": "month focus name",
+    "tasks": [
+      {"action": "specific action", "axis": "A", "impact": "result"},
+      {"action": "specific action", "axis": "K", "impact": "result"},
+      {"action": "specific action", "axis": "Q", "impact": "result"},
+      {"action": "specific action", "axis": "S", "impact": "result"}
+    ]
+  },
+  "month3": {
+    "theme": "month focus name",
+    "tasks": [
+      {"action": "specific action", "axis": "S", "impact": "result"},
+      {"action": "specific action", "axis": "A", "impact": "result"},
+      {"action": "specific action", "axis": "Q", "impact": "result"},
+      {"action": "specific action", "axis": "K", "impact": "result"}
+    ]
+  },
+  "axisInsights": {
+    "K": "recommendation for K axis",
+    "A": "recommendation for A axis",
+    "Q": "recommendation for Q axis",
+    "S": "recommendation for S axis"
+  },
+  "templates": ["K_registry", "A_audit"]
+}
+
+For templates pick 2-3 from: K_registry K_sop K_metrics K_onboard A_audit A_roi A_tools A_checklist Q_kpi Q_risks Q_errors Q_checkpoints S_pl S_cashflow S_raci S_hire. Only for axes below 60%.`
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -44,7 +88,13 @@ K=процессы/SOP/метрики, A=автоматизация/AI/рути�
     const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (!jsonMatch) return res.status(500).json({ error: 'Invalid AI response', raw: text })
 
-    const roadmap = JSON.parse(jsonMatch[0])
+    // Strip JS comments and trailing commas before parsing
+    const cleaned = jsonMatch[0]
+      .replace(/\/\/[^\n]*/g, '')
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/,(\s*[}\]])/g, '$1')
+
+    const roadmap = JSON.parse(cleaned)
     return res.status(200).json(roadmap)
   } catch (e) {
     return res.status(500).json({ error: e.message })
