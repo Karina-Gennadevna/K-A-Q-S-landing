@@ -175,24 +175,12 @@
       color: var(--blue);
       margin-bottom: 40px;
     }
-    .cover-index-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 16px;
-      margin-bottom: 8px;
-    }
-    .cover-index-num {
-      font-size: clamp(80px, 18vw, 120px);
-      font-weight: 800;
-      color: var(--text1);
-      line-height: 1;
-      letter-spacing: -.04em;
-    }
-    .cover-index-denom {
-      font-size: 1.4rem;
-      color: var(--text4);
-      padding-bottom: 14px;
-    }
+    /* gauge */
+    .gauge-wrap { margin-bottom: 16px; }
+    .gauge-svg { width: 240px; height: auto; display: block; overflow: visible; }
+    .gauge-fill { transition: stroke-dashoffset 1.2s cubic-bezier(.16,1,.3,1); }
+    .gauge-num { font-family: 'Inter', sans-serif; font-weight: 800; fill: var(--text1); }
+    .gauge-label { font-family: var(--mono); fill: var(--text4); }
     .cover-status {
       font-family: var(--mono);
       font-size: .7rem;
@@ -520,6 +508,47 @@
       line-height: 1.4;
     }
     .task-impact::before { content: '→ '; color: var(--text4); }
+
+    /* ── 3-COL PLAN GRID ── */
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 680px) { .plan-grid { grid-template-columns: 1fr; } }
+    .plan-col {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .plan-col-head {
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg3);
+    }
+    .plan-col-num {
+      font-family: var(--mono);
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 5px;
+    }
+    .plan-col-theme {
+      font-size: .86rem;
+      font-weight: 700;
+      color: var(--text1);
+      line-height: 1.3;
+    }
+    .plan-col-tasks {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
     /* ── TEMPLATES ── */
     .templates-grid {
@@ -956,9 +985,14 @@
   <!-- COVER -->
   <div class="cover">
     <div class="cover-eyebrow">K-A-Q-S™ · Персональный Roadmap на 90 дней</div>
-    <div class="cover-index-row">
-      <span class="cover-index-num" id="cv-index">—</span>
-      <span class="cover-index-denom">/100</span>
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 200 118" id="gauge-svg">
+        <path d="M 18 108 A 82 82 0 0 1 182 108" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="13" stroke-linecap="round"/>
+        <path id="gauge-fill" d="M 18 108 A 82 82 0 0 1 182 108" fill="none" stroke="#3B82F6" stroke-width="13" stroke-linecap="round"
+          stroke-dasharray="257.6 257.6" stroke-dashoffset="257.6"/>
+        <text id="cv-index" class="gauge-num" x="100" y="96" text-anchor="middle" font-size="52">—</text>
+        <text class="gauge-label" x="100" y="114" text-anchor="middle" font-size="10" letter-spacing="2">/100</text>
+      </svg>
     </div>
     <div class="cover-status" id="cv-status"></div>
     <div class="cover-title" id="cv-title">Персональный Roadmap</div>
@@ -1186,8 +1220,14 @@ function renderRoadmap() {
   const r = roadmapData
   const status = getStatus(d.index)
 
-  // Cover
+  // Cover — gauge
   document.getElementById('cv-index').textContent = d.index
+  const gaugeFill = document.getElementById('gauge-fill')
+  const arcLen = 257.6
+  gaugeFill.style.stroke = getBarColor(d.index)
+  setTimeout(() => {
+    gaugeFill.setAttribute('stroke-dashoffset', arcLen * (1 - d.index / 100))
+  }, 600)
   const cvStatus = document.getElementById('cv-status')
   cvStatus.textContent = status.label
   cvStatus.className = 'cover-status ' + status.cls
@@ -1239,13 +1279,14 @@ function renderRoadmap() {
       </div>`
   })
 
-  // Plan
+  // Plan — 3-column grid
   const planEl = document.getElementById('plan-container')
+  planEl.className = 'plan-grid'
   planEl.innerHTML = ''
   const months = [
-    { key: 'month1', label: 'Месяц 1', data: r.month1 },
-    { key: 'month2', label: 'Месяц 2', data: r.month2 },
-    { key: 'month3', label: 'Месяц 3', data: r.month3 },
+    { num: '01', label: 'Месяц 1', data: r.month1 },
+    { num: '02', label: 'Месяц 2', data: r.month2 },
+    { num: '03', label: 'Месяц 3', data: r.month3 },
   ]
   months.forEach((m, mi) => {
     if (!m.data) return
@@ -1259,15 +1300,12 @@ function renderRoadmap() {
         <div class="task-impact">${t.impact}</div>
       </div>`).join('')
     planEl.innerHTML += `
-      <div class="month-block">
-        <div class="month-header">
-          <div class="month-num-block">
-            <div class="month-num-label">Месяц</div>
-            <div class="month-num-digit">${mi + 1}</div>
-          </div>
-          <div class="month-theme">${m.data.theme || ''}</div>
+      <div class="plan-col">
+        <div class="plan-col-head">
+          <div class="plan-col-num">Месяц ${m.num}</div>
+          <div class="plan-col-theme">${m.data.theme || ''}</div>
         </div>
-        <div class="month-tasks">${tasks}</div>
+        <div class="plan-col-tasks">${tasks}</div>
       </div>`
   })
 
