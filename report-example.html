@@ -807,18 +807,27 @@
         </div>
         <div class="lock-title">Получить полный Roadmap на 90 дней</div>
         <div class="lock-desc">Персональный план с конкретными шагами, шаблонами и чеклистами — разработанный на основе ваших результатов диагностики.</div>
-        <button onclick="buyRoadmap(this)" class="lock-btn">
-          Купить Roadmap
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
+        <div style="display:flex;gap:8px;width:100%;flex-wrap:wrap">
+          <input id="promo-input" type="text" placeholder="Промокод (необязательно)"
+            style="flex:1;min-width:140px;padding:12px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#F0F4F8;font-size:14px;outline:none;">
+          <button onclick="buyRoadmap(this)" class="lock-btn" style="flex:1;min-width:160px">
+            Купить Roadmap
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
         <script>
         async function buyRoadmap(btn) {
+          const promo = document.getElementById('promo-input').value.trim()
           btn.disabled = true
           btn.textContent = 'Создаём платёж...'
           try {
-            const res = await fetch('/api/create-payment', { method: 'POST' })
+            const res = await fetch('/api/create-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ promo })
+            })
             const data = await res.json()
             if (data.url) {
               window.location.href = data.url

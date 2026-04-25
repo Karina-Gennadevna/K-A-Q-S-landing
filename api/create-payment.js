@@ -9,7 +9,12 @@ module.exports = async function handler(req, res) {
 
   const shopId = process.env.YOOKASSA_SHOP_ID
   const secretKey = process.env.YOOKASSA_SECRET_KEY
+  const promoCode = process.env.PROMO_CODE_100
   if (!shopId || !secretKey) return res.status(500).json({ error: 'Payment not configured' })
+
+  const { promo } = req.body || {}
+  const isPromo = promoCode && promo && promo.trim().toUpperCase() === promoCode.toUpperCase()
+  const amount = isPromo ? '1.00' : '14990.00'
 
   const origin = req.headers.origin || req.headers.referer || 'https://k-a-q-s-landing-1zsr.vercel.app'
   const returnUrl = origin.replace(/\/$/, '') + '/thank-you.html'
@@ -23,9 +28,9 @@ module.exports = async function handler(req, res) {
         'Authorization': 'Basic ' + Buffer.from(`${shopId}:${secretKey}`).toString('base64'),
       },
       body: JSON.stringify({
-        amount: { value: '14990.00', currency: 'RUB' },
+        amount: { value: amount, currency: 'RUB' },
         confirmation: { type: 'redirect', return_url: returnUrl },
-        description: 'Roadmap K-A-Q-S™ на 90 дней',
+        description: isPromo ? 'Roadmap K-A-Q-S™ [тест]' : 'Roadmap K-A-Q-S™ на 90 дней',
         capture: true,
       }),
     })
