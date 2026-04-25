@@ -351,38 +351,38 @@
     .red-zones {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 0;
     }
     .red-zone-card {
-      background: rgba(239,68,68,.04);
-      border: 1px solid rgba(239,68,68,.15);
-      border-radius: 12px;
-      padding: 20px;
       display: flex;
-      gap: 16px;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
     }
-    .rz-icon {
+    .red-zone-card:last-child { border-bottom: none; }
+    .rz-num {
+      font-family: var(--mono);
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--red);
+      opacity: .5;
       flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      background: rgba(239,68,68,.1);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
+      padding-top: 3px;
+      letter-spacing: .06em;
     }
-    .rz-body {}
+    .rz-body { flex: 1; }
     .rz-title {
       font-size: .9rem;
       font-weight: 600;
-      color: #FCA5A5;
-      margin-bottom: 6px;
+      color: var(--text1);
+      margin-bottom: 4px;
     }
+    .rz-accent { color: var(--red); }
     .rz-desc {
-      font-size: .82rem;
+      font-size: .8rem;
       color: var(--text3);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     /* ── MONTH PLAN ── */
@@ -1264,13 +1264,12 @@ function renderRoadmap() {
   // Red zones
   const rzEl = document.getElementById('red-zones')
   rzEl.innerHTML = ''
-  const icons = ['⚠️', '🔴', '⛔']
   ;(r.redZones || []).forEach((rz, i) => {
     rzEl.innerHTML += `
       <div class="red-zone-card">
-        <div class="rz-icon">${icons[i] || '⚠️'}</div>
+        <div class="rz-num">0${i + 1}</div>
         <div class="rz-body">
-          <div class="rz-title">${rz.title}</div>
+          <div class="rz-title"><span class="rz-accent">↳</span> ${rz.title}</div>
           <div class="rz-desc">${rz.description}</div>
         </div>
       </div>`
