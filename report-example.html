@@ -807,12 +807,33 @@
         </div>
         <div class="lock-title">Получить полный Roadmap на 90 дней</div>
         <div class="lock-desc">Персональный план с конкретными шагами, шаблонами и чеклистами — разработанный на основе ваших результатов диагностики.</div>
-        <a href="https://t.me/KKarinaGen" target="_blank" class="lock-btn">
+        <button onclick="buyRoadmap(this)" class="lock-btn">
           Купить Roadmap
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+        </button>
+        <script>
+        async function buyRoadmap(btn) {
+          btn.disabled = true
+          btn.textContent = 'Создаём платёж...'
+          try {
+            const res = await fetch('/api/create-payment', { method: 'POST' })
+            const data = await res.json()
+            if (data.url) {
+              window.location.href = data.url
+            } else {
+              alert('Ошибка оплаты. Напишите нам: t.me/KKarinaGen')
+              btn.disabled = false
+              btn.textContent = 'Купить Roadmap'
+            }
+          } catch {
+            alert('Ошибка. Напишите нам: t.me/KKarinaGen')
+            btn.disabled = false
+            btn.textContent = 'Купить Roadmap'
+          }
+        }
+        </script>
         <div class="lock-price"><strong>14 990 ₽</strong> · PDF-документ · Готов за 3 рабочих дня</div>
       </div>
 
