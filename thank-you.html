@@ -258,29 +258,29 @@
 
     <div class="tag">Оплата прошла</div>
 
-    <h1>Roadmap отправлен в работу</h1>
-    <p class="subtitle">Мы получили ваш заказ и уже работаем над персональным планом. Вот что будет дальше:</p>
+    <h1>Генерируем ваш Roadmap</h1>
+    <p class="subtitle">Оплата подтверждена. Через несколько секунд откроется ваш персональный план на 90 дней.</p>
 
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
         <div class="step-body">
-          <div class="step-title">Мы изучаем ваши результаты</div>
-          <div class="step-desc">Анализируем ответы диагностики и формируем план под конкретные слабые оси вашего бизнеса.</div>
+          <div class="step-title">Загружаем результаты диагностики</div>
+          <div class="step-desc">Анализируем ваши ответы по 4 осям: K, A, Q, S.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">02</div>
         <div class="step-body">
-          <div class="step-title">Roadmap готов в течение 3 рабочих дней</div>
-          <div class="step-desc">PDF-документ с конкретными шагами, чеклистами и шаблонами придёт на email, который вы указали.</div>
+          <div class="step-title">AI формирует персональный план</div>
+          <div class="step-desc">Claude анализирует слабые зоны и составляет 90-дневный Roadmap именно под ваш бизнес.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">03</div>
         <div class="step-body">
-          <div class="step-title">Проверьте папку «Спам»</div>
-          <div class="step-desc">Если письмо не пришло за 3 дня — напишите нам, разберёмся быстро.</div>
+          <div class="step-title">Документ откроется автоматически</div>
+          <div class="step-desc">Сохраните его как PDF — это ваш персональный рабочий инструмент.</div>
         </div>
       </div>
     </div>
@@ -288,8 +288,8 @@
     <div class="divider"></div>
 
     <div class="actions">
-      <a href="kaqs-quiz.html" class="btn-primary">
-        Пройти диагностику ещё раз
+      <a href="roadmap.html" class="btn-primary" id="go-btn">
+        Открыть Roadmap
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -297,11 +297,25 @@
       <a href="index.html" class="btn-secondary">← На главную</a>
     </div>
 
+    <p class="fine-print" id="redirect-note" style="margin-top:16px;color:#4A5568;">
+      Автоматический переход через <span id="countdown">3</span> сек…
+    </p>
+
     <p class="fine-print">
       Если возникли вопросы — пишите на
-      <a href="mailto:miss.kuznetsov@mail.ru">miss.kuznetsov@mail.ru</a>.
+      <a href="mailto:miss.kuznetsov96@gmail.com">miss.kuznetsov96@gmail.com</a>.
       Условия возврата описаны в <a href="oferta.html">публичной оферте</a>.
     </p>
+
+    <script>
+      let n = 3
+      const cd = document.getElementById('countdown')
+      const timer = setInterval(() => {
+        n--
+        if (cd) cd.textContent = n
+        if (n <= 0) { clearInterval(timer); window.location.href = 'roadmap.html' }
+      }, 1000)
+    </script>
 
   </div>
 </main>

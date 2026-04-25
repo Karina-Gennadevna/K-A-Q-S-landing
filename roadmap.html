@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap K-A-Q-S™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0B0F14;
+      --bg2: #0F1521;
+      --bg3: #131C2A;
+      --line: rgba(255,255,255,.07);
+      --text1: #F0F4F8;
+      --text2: #CBD5E1;
+      --text3: #8A9BB0;
+      --text4: #4A5568;
+      --blue: #3B82F6;
+      --blue-dim: rgba(59,130,246,.12);
+      --green: #22C55E;
+      --red: #EF4444;
+      --amber: #F59E0B;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text2);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── LOADING ── */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      gap: 24px;
+      transition: opacity .5s;
+    }
+    #loading-screen.hidden { opacity: 0; pointer-events: none; }
+    .loading-logo {
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .loading-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text1);
+      text-align: center;
+    }
+    .loading-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 280px;
+    }
+    .loading-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .82rem;
+      color: var(--text3);
+      transition: color .3s;
+    }
+    .loading-step.active { color: var(--text1); }
+    .loading-step.done { color: var(--green); }
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text4);
+      flex-shrink: 0;
+      transition: background .3s;
+    }
+    .loading-step.active .step-dot { background: var(--blue); animation: pulse 1s infinite; }
+    .loading-step.done .step-dot { background: var(--green); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* ── ERROR ── */
+    #error-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      gap: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+    #error-screen.show { display: flex; }
+
+    /* ── PRINT BUTTON ── */
+    .print-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(11,15,20,.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      transform: translateY(-100%);
+      transition: transform .4s cubic-bezier(.16,1,.3,1);
+    }
+    .print-bar.visible { transform: translateY(0); }
+    .print-logo {
+      font-family: var(--mono);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      color: var(--blue);
+    }
+    .print-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .print-btn:hover { background: #2563EB; }
+
+    /* ── DOCUMENT ── */
+    #roadmap {
+      display: none;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    #roadmap.visible { display: block; }
+
+    /* ── COVER ── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--line);
+    }
+    .cover-eyebrow {
+      font-family: var(--mono);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 40px;
+    }
+    .cover-index-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .cover-index-num {
+      font-size: clamp(80px, 18vw, 120px);
+      font-weight: 800;
+      color: var(--text1);
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+    .cover-index-denom {
+      font-size: 1.4rem;
+      color: var(--text4);
+      padding-bottom: 14px;
+    }
+    .cover-status {
+      font-family: var(--mono);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 28px;
+    }
+    .cover-status.low { background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.2); }
+    .cover-status.mid { background: rgba(245,158,11,.1); color: var(--amber); border: 1px solid rgba(245,158,11,.2); }
+    .cover-status.good { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+    .cover-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text1);
+      letter-spacing: -.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .cover-subtitle {
+      font-size: 1rem;
+      color: var(--text3);
+      margin-bottom: 40px;
+    }
+    .cover-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .cover-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .cover-meta-label {
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text4);
+    }
+    .cover-meta-val {
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--text2);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .section:last-child { border-bottom: none; }
+    .section-num {
+      font-family: var(--mono);
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text1);
+      letter-spacing: -.02em;
+      margin-bottom: 32px;
+    }
+
+    /* ── AXIS BARS ── */
+    .axis-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .axis-row {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .axis-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .axis-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .axis-key {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 600;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: var(--blue-dim);
+      color: var(--blue);
+    }
+    .axis-name {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text2);
+    }
+    .axis-name span {
+      font-weight: 400;
+      color: var(--text3);
+      font-size: .8rem;
+    }
+    .axis-pct {
+      font-family: var(--mono);
+      font-size: .88rem;
+      font-weight: 600;
+    }
+    .axis-track {
+      height: 6px;
+      background: rgba(255,255,255,.06);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .axis-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s cubic-bezier(.16,1,.3,1);
+      width: 0;
+    }
+    .axis-insight {
+      margin-top: 10px;
+      font-size: .78rem;
+      color: var(--text3);
+      line-height: 1.5;
+    }
+
+    /* ── PROFILE CARD ── */
+    .profile-card {
+      background: var(--bg3);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 0;
+    }
+    .profile-label {
+      font-family: var(--mono);
+      font-size: .6rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text4);
+      margin-bottom: 6px;
+    }
+    .profile-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text1);
+      margin-bottom: 12px;
+    }
+    .profile-summary {
+      font-size: .88rem;
+      color: var(--text3);
+      line-height: 1.65;
+    }
+
+    /* ── RED ZONES ── */
+    .red-zones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .red-zone-card {
+      background: rgba(239,68,68,.04);
+      border: 1px solid rgba(239,68,68,.15);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+    }
+    .rz-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: rgba(239,68,68,.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .rz-body {}
+    .rz-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: #FCA5A5;
+      margin-bottom: 6px;
+    }
+    .rz-desc {
+      font-size: .82rem;
+      color: var(--text3);
+      line-height: 1.6;
+    }
+
+    /* ── MONTH PLAN ── */
+    .month-block {
+      margin-bottom: 40px;
+    }
+    .month-block:last-child { margin-bottom: 0; }
+    .month-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .month-num {
+      font-family: var(--mono);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-dim);
+      padding: 5px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .month-theme {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text1);
+    }
+    .month-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .task-row {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .task-axis-tag {
+      font-family: var(--mono);
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      padding: 3px 8px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tag-K { background: rgba(59,130,246,.12); color: #60A5FA; }
+    .tag-A { background: rgba(168,85,247,.12); color: #C084FC; }
+    .tag-Q { background: rgba(34,197,94,.12); color: #4ADE80; }
+    .tag-S { background: rgba(245,158,11,.12); color: #FCD34D; }
+    .task-body { flex: 1; }
+    .task-action {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text1);
+      margin-bottom: 4px;
+    }
+    .task-impact {
+      font-size: .78rem;
+      color: var(--text3);
+    }
+    .task-impact::before { content: '→ '; color: var(--text4); }
+
+    /* ── TEMPLATES ── */
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .template-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .template-axis-badge {
+      font-family: var(--mono);
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      padding: 3px 9px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .template-name {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--text1);
+      margin-bottom: 6px;
+    }
+    .template-desc {
+      font-size: .76rem;
+      color: var(--text3);
+      line-height: 1.55;
+    }
+    .owner-section-label {
+      font-family: var(--mono);
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text4);
+      margin-bottom: 12px;
+    }
+    .owner-templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .owner-card {
+      background: var(--bg3);
+      border: 1px solid rgba(59,130,246,.15);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .owner-icon {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .owner-name {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--text1);
+      margin-bottom: 6px;
+    }
+    .owner-desc {
+      font-size: .76rem;
+      color: var(--text3);
+      line-height: 1.55;
+    }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      padding: 48px 0 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 12px;
+    }
+    .doc-footer-logo {
+      font-family: var(--mono);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      color: var(--blue);
+    }
+    .doc-footer-note {
+      font-size: .72rem;
+      color: var(--text4);
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      @page { margin: 20mm 18mm; }
+      body { background: #fff !important; color: #111 !important; }
+      .print-bar, #loading-screen, #error-screen { display: none !important; }
+      #roadmap { display: block !important; padding: 0; }
+      :root {
+        --bg: #fff; --bg2: #f8f9fa; --bg3: #f1f3f5;
+        --line: #e5e7eb;
+        --text1: #111; --text2: #374151; --text3: #6B7280; --text4: #9CA3AF;
+        --blue: #2563EB;
+        --blue-dim: rgba(37,99,235,.08);
+      }
+      .cover { min-height: auto; padding: 40px 0 32px; page-break-after: always; }
+      .section { padding: 36px 0; }
+      .axis-key { background: rgba(37,99,235,.08) !important; color: #2563EB !important; }
+      .red-zone-card { background: rgba(239,68,68,.03) !important; border-color: rgba(239,68,68,.2) !important; }
+      .rz-title { color: #B91C1C !important; }
+      .tag-K { background: rgba(37,99,235,.08) !important; color: #1D4ED8 !important; }
+      .tag-A { background: rgba(126,34,206,.08) !important; color: #7E22CE !important; }
+      .tag-Q { background: rgba(21,128,61,.08) !important; color: #15803D !important; }
+      .tag-S { background: rgba(180,83,9,.08) !important; color: #B45309 !important; }
+    }
+
+    /* ── NO DATA ── */
+    .no-data-box {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 48px 32px;
+      text-align: center;
+      max-width: 480px;
+      margin: 20vh auto 0;
+    }
+    .no-data-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text1);
+      margin-bottom: 10px;
+    }
+    .no-data-desc {
+      font-size: .88rem;
+      color: var(--text3);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .btn-go {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-size: .88rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 9px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="loading-logo">K-A-Q-S™</div>
+  <div class="loading-title">Генерируем ваш Roadmap</div>
+  <div class="loading-steps">
+    <div class="loading-step" id="ls1">
+      <div class="step-dot"></div>
+      Загружаем результаты диагностики
+    </div>
+    <div class="loading-step" id="ls2">
+      <div class="step-dot"></div>
+      Анализируем слабые оси
+    </div>
+    <div class="loading-step" id="ls3">
+      <div class="step-dot"></div>
+      Формируем персональный план
+    </div>
+    <div class="loading-step" id="ls4">
+      <div class="step-dot"></div>
+      Подбираем шаблоны
+    </div>
+  </div>
+</div>
+
+<!-- ERROR -->
+<div id="error-screen">
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--blue);margin-bottom:16px;">K-A-Q-S™</div>
+  <div style="font-size:1.1rem;font-weight:600;color:var(--text1);margin-bottom:8px;">Не удалось сгенерировать Roadmap</div>
+  <div id="error-msg" style="font-size:.85rem;color:var(--text3);max-width:360px;text-align:center;line-height:1.6;margin-bottom:24px;"></div>
+  <button onclick="retryGenerate()" style="background:var(--blue);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;">Попробовать снова</button>
+  <a href="mailto:miss.kuznetsov96@gmail.com" style="color:var(--text3);font-size:.8rem;margin-top:12px;">или напишите нам</a>
+</div>
+
+<!-- PRINT BAR -->
+<div class="print-bar" id="print-bar">
+  <div class="print-logo">K-A-Q-S™</div>
+  <button class="print-btn" onclick="window.print()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 11v3h8v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Сохранить PDF
+  </button>
+</div>
+
+<!-- DOCUMENT -->
+<div id="roadmap">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">K-A-Q-S™ · Персональный Roadmap на 90 дней</div>
+    <div class="cover-index-row">
+      <span class="cover-index-num" id="cv-index">—</span>
+      <span class="cover-index-denom">/100</span>
+    </div>
+    <div class="cover-status" id="cv-status"></div>
+    <div class="cover-title" id="cv-title">Персональный Roadmap</div>
+    <div class="cover-subtitle" id="cv-subtitle">Индекс управляемости бизнеса</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Руководитель</div>
+        <div class="cover-meta-val" id="cv-name">—</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Дата диагностики</div>
+        <div class="cover-meta-val" id="cv-date">—</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Профиль</div>
+        <div class="cover-meta-val" id="cv-profile">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 ДИАГНОСТИКА -->
+  <div class="section">
+    <div class="section-num">01</div>
+    <div class="section-title">Диагностический профиль</div>
+    <div class="axis-grid" id="axis-grid"></div>
+    <div class="profile-card" id="profile-card">
+      <div class="profile-label">Оценка</div>
+      <div class="profile-name" id="profile-name">—</div>
+      <div class="profile-summary" id="profile-summary">—</div>
+    </div>
+  </div>
+
+  <!-- 02 КРАСНЫЕ ЗОНЫ -->
+  <div class="section">
+    <div class="section-num">02</div>
+    <div class="section-title">Красные зоны — приоритет №1</div>
+    <div class="red-zones" id="red-zones"></div>
+  </div>
+
+  <!-- 03 ПЛАН -->
+  <div class="section">
+    <div class="section-num">03</div>
+    <div class="section-title">Roadmap на 90 дней</div>
+    <div id="plan-container"></div>
+  </div>
+
+  <!-- 04 ИНСТРУМЕНТЫ -->
+  <div class="section">
+    <div class="section-num">04</div>
+    <div class="section-title">Инструменты и шаблоны</div>
+    <div class="templates-grid" id="templates-grid"></div>
+    <div class="owner-section-label">Owner-уровень — включено в ваш пакет</div>
+    <div class="owner-templates-grid" id="owner-grid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="doc-footer-logo">K-A-Q-S™</div>
+    <div class="doc-footer-note">Документ сгенерирован персонально · Не подлежит передаче третьим лицам</div>
+  </div>
+
+</div>
+
+<script>
+const TEMPLATE_CATALOG = {
+  K_registry:   { name: 'Реестр процессов',       axis: 'K', desc: 'Список всех ключевых процессов компании с владельцем, частотой и статусом описания' },
+  K_sop:        { name: 'SOP шаблон',              axis: 'K', desc: 'Стандартная операционная процедура для описания любого повторяющегося процесса' },
+  K_metrics:    { name: 'Карта метрик',            axis: 'K', desc: 'Таблица метрик по каждому направлению с нормой, фактом и ответственным' },
+  K_onboard:    { name: 'Онбординг-план',          axis: 'K', desc: 'Чеклист введения нового сотрудника в должность за 30 дней' },
+  A_audit:      { name: 'Аудит рутины',            axis: 'A', desc: 'Таблица всех повторяющихся задач с оценкой времени и потенциала автоматизации' },
+  A_roi:        { name: 'ROI-калькулятор',         axis: 'A', desc: 'Шаблон расчёта окупаемости внедрения инструмента или найма сотрудника' },
+  A_tools:      { name: 'Карта AI-инструментов',  axis: 'A', desc: 'Таблица всех используемых инструментов и автоматизаций с задачами и стоимостью' },
+  A_checklist:  { name: 'AI-ready чек-лист',      axis: 'A', desc: 'Критерии готовности процесса к автоматизации или замене AI-решением' },
+  Q_kpi:        { name: 'KPI Dashboard',           axis: 'Q', desc: 'Дашборд ключевых показателей с целевыми значениями и цветовым светофором' },
+  Q_risks:      { name: 'Реестр рисков',           axis: 'Q', desc: 'Таблица бизнес-рисков с вероятностью, влиянием и планом снижения' },
+  Q_errors:     { name: 'Разбор ошибок',           axis: 'Q', desc: 'Шаблон анализа инцидентов по системе 5 Why для устранения повторяющихся проблем' },
+  Q_checkpoints:{ name: 'Контрольные точки',       axis: 'Q', desc: 'Чеклист еженедельных и ежемесячных точек контроля для руководителя' },
+  S_pl:         { name: 'P&L шаблон',              axis: 'S', desc: 'Отчёт о прибылях и убытках в упрощённом формате для малого бизнеса' },
+  S_cashflow:   { name: 'Cash Flow light',         axis: 'S', desc: 'Еженедельный трекер движения денег с балансом и прогнозом на месяц' },
+  S_raci:       { name: 'RACI матрица',            axis: 'S', desc: 'Таблица ответственности по ключевым процессам и проектам компании' },
+  S_hire:       { name: 'План найма',              axis: 'S', desc: 'Шаблон описания роли, воронки подбора и онбординга для масштабирования команды' },
+}
+
+const OWNER_TEMPLATES = [
+  { icon: '📋', name: 'Decision Log', desc: 'Журнал стратегических решений с контекстом, альтернативами и результатами — для ясности и обучения команды' },
+  { icon: '🗺️', name: 'Карта «человек/AI/система»', desc: 'Визуальная карта распределения задач между человеком, AI и автоматическими системами' },
+  { icon: '🚨', name: 'Красные зоны бизнеса', desc: 'Реестр критических зависимостей, узких мест и точек отказа — то, что нельзя игнорировать' },
+]
+
+const AXIS_NAMES = { K: 'Знания', A: 'Автоматизация', Q: 'Качество', S: 'Масштаб' }
+const AXIS_SUBS  = { K: 'процессы · SOP · метрики', A: 'рутины · AI · ROI', Q: 'KPI · контроль · стандарты', S: 'финансы · найм · рост' }
+const AXIS_COLORS = { K: '#60A5FA', A: '#C084FC', Q: '#4ADE80', S: '#FCD34D' }
+
+function getBarColor(pct) {
+  if (pct < 40) return '#EF4444'
+  if (pct < 60) return '#F59E0B'
+  if (pct < 80) return '#22C55E'
+  return '#3B82F6'
+}
+
+function getStatus(index) {
+  if (index < 40) return { label: 'Красная зона', cls: 'low' }
+  if (index < 60) return { label: 'Зона роста', cls: 'mid' }
+  if (index < 80) return { label: 'Устойчивый', cls: 'good' }
+  return { label: 'Зрелый', cls: 'good' }
+}
+
+let quizData = null
+let roadmapData = null
+
+async function init() {
+  // Load localStorage
+  const raw = localStorage.getItem('kaqs_results')
+  const history = raw ? JSON.parse(raw) : []
+  quizData = history[0] || null
+
+  if (!quizData) {
+    document.getElementById('loading-screen').classList.add('hidden')
+    setTimeout(() => {
+      document.getElementById('loading-screen').style.display = 'none'
+      showNoData()
+    }, 500)
+    return
+  }
+
+  // Animate loading steps
+  setStep(1)
+  await delay(600)
+  setStep(2)
+  await delay(700)
+  setStep(3)
+
+  // Call API
+  try {
+    const res = await fetch('/api/generate-roadmap', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: quizData.name, index: quizData.index, scores: quizData.scores }),
+    })
+    const data = await res.json()
+    if (!res.ok || data.error) throw new Error(data.error || 'Ошибка API')
+
+    roadmapData = data
+    setStep(4)
+    await delay(600)
+
+    renderRoadmap()
+
+    document.getElementById('loading-screen').classList.add('hidden')
+    setTimeout(() => {
+      document.getElementById('loading-screen').style.display = 'none'
+      document.getElementById('roadmap').classList.add('visible')
+      document.getElementById('print-bar').classList.add('visible')
+      animateAxes()
+    }, 500)
+  } catch (e) {
+    document.getElementById('loading-screen').style.display = 'none'
+    const errScreen = document.getElementById('error-screen')
+    errScreen.classList.add('show')
+    document.getElementById('error-msg').textContent = e.message || 'Попробуйте обновить страницу. Если ошибка повторяется — напишите нам.'
+  }
+}
+
+function setStep(n) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('ls' + i)
+    if (i < n) { el.className = 'loading-step done'; }
+    else if (i === n) { el.className = 'loading-step active'; }
+    else { el.className = 'loading-step'; }
+  }
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)) }
+
+function renderRoadmap() {
+  const d = quizData
+  const r = roadmapData
+  const status = getStatus(d.index)
+
+  // Cover
+  document.getElementById('cv-index').textContent = d.index
+  const cvStatus = document.getElementById('cv-status')
+  cvStatus.textContent = status.label
+  cvStatus.className = 'cover-status ' + status.cls
+  document.getElementById('cv-title').textContent = (d.name || 'Ваш') + ' Roadmap'
+  document.getElementById('cv-name').textContent = d.name || 'Руководитель'
+  document.getElementById('cv-date').textContent = d.date || new Date().toLocaleDateString('ru-RU')
+  document.getElementById('cv-profile').textContent = r.profile || '—'
+  document.getElementById('cv-subtitle').textContent = 'Персональный план на 90 дней · K-AQS™'
+
+  // Axis bars
+  const axisGrid = document.getElementById('axis-grid')
+  axisGrid.innerHTML = ''
+  ;['K','A','Q','S'].forEach(ax => {
+    const pct = d.scores[ax]
+    const color = getBarColor(pct)
+    const insight = r.axisInsights?.[ax] || ''
+    axisGrid.innerHTML += `
+      <div class="axis-row">
+        <div class="axis-row-top">
+          <div class="axis-label">
+            <div class="axis-key">${ax}</div>
+            <div class="axis-name">${AXIS_NAMES[ax]} <span>· ${AXIS_SUBS[ax]}</span></div>
+          </div>
+          <div class="axis-pct" style="color:${color}">${pct}%</div>
+        </div>
+        <div class="axis-track">
+          <div class="axis-fill" id="af-${ax}" style="background:${color}"></div>
+        </div>
+        ${insight ? `<div class="axis-insight">${insight}</div>` : ''}
+      </div>`
+  })
+
+  // Profile
+  document.getElementById('profile-name').textContent = r.profile || '—'
+  document.getElementById('profile-summary').textContent = r.summary || ''
+
+  // Red zones
+  const rzEl = document.getElementById('red-zones')
+  rzEl.innerHTML = ''
+  const icons = ['⚠️', '🔴', '⛔']
+  ;(r.redZones || []).forEach((rz, i) => {
+    rzEl.innerHTML += `
+      <div class="red-zone-card">
+        <div class="rz-icon">${icons[i] || '⚠️'}</div>
+        <div class="rz-body">
+          <div class="rz-title">${rz.title}</div>
+          <div class="rz-desc">${rz.description}</div>
+        </div>
+      </div>`
+  })
+
+  // Plan
+  const planEl = document.getElementById('plan-container')
+  planEl.innerHTML = ''
+  const months = [
+    { key: 'month1', label: 'Месяц 1', data: r.month1 },
+    { key: 'month2', label: 'Месяц 2', data: r.month2 },
+    { key: 'month3', label: 'Месяц 3', data: r.month3 },
+  ]
+  months.forEach(m => {
+    if (!m.data) return
+    const tasks = (m.data.tasks || []).map(t => `
+      <div class="task-row">
+        <div class="task-axis-tag tag-${t.axis}">${t.axis}</div>
+        <div class="task-body">
+          <div class="task-action">${t.action}</div>
+          <div class="task-impact">${t.impact}</div>
+        </div>
+      </div>`).join('')
+    planEl.innerHTML += `
+      <div class="month-block">
+        <div class="month-header">
+          <div class="month-num">${m.label}</div>
+          <div class="month-theme">${m.data.theme || ''}</div>
+        </div>
+        <div class="month-tasks">${tasks}</div>
+      </div>`
+  })
+
+  // Templates
+  const tplEl = document.getElementById('templates-grid')
+  tplEl.innerHTML = ''
+  const recommended = r.templates || []
+  // If no recommendations, show templates for weakest axes
+  const toShow = recommended.length > 0 ? recommended : getDefaultTemplates(d.scores)
+  toShow.forEach(id => {
+    const t = TEMPLATE_CATALOG[id]
+    if (!t) return
+    const color = AXIS_COLORS[t.axis]
+    tplEl.innerHTML += `
+      <div class="template-card">
+        <div class="template-axis-badge tag-${t.axis}">${t.axis} · ${AXIS_NAMES[t.axis]}</div>
+        <div class="template-name">${t.name}</div>
+        <div class="template-desc">${t.desc}</div>
+      </div>`
+  })
+
+  // Owner templates
+  const ownerEl = document.getElementById('owner-grid')
+  ownerEl.innerHTML = ''
+  OWNER_TEMPLATES.forEach(t => {
+    ownerEl.innerHTML += `
+      <div class="owner-card">
+        <div class="owner-icon">${t.icon}</div>
+        <div class="owner-name">${t.name}</div>
+        <div class="owner-desc">${t.desc}</div>
+      </div>`
+  })
+}
+
+function getDefaultTemplates(scores) {
+  const result = []
+  ;['K','A','Q','S'].forEach(ax => {
+    if (scores[ax] < 60) {
+      const keys = Object.keys(TEMPLATE_CATALOG).filter(k => TEMPLATE_CATALOG[k].axis === ax)
+      if (keys[0]) result.push(keys[0])
+      if (keys[1]) result.push(keys[1])
+    }
+  })
+  return result.slice(0, 6)
+}
+
+function animateAxes() {
+  if (!quizData) return
+  setTimeout(() => {
+    ;['K','A','Q','S'].forEach(ax => {
+      const el = document.getElementById('af-' + ax)
+      if (el) el.style.width = quizData.scores[ax] + '%'
+    })
+  }, 200)
+}
+
+function showNoData() {
+  document.body.innerHTML += `
+    <div style="padding:24px">
+      <div class="no-data-box">
+        <div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--blue);margin-bottom:16px;">K-A-Q-S™</div>
+        <div class="no-data-title">Результаты диагностики не найдены</div>
+        <div class="no-data-desc">Для генерации Roadmap необходимо пройти диагностику. Если вы уже проходили её — возможно, сменили браузер или устройство.</div>
+        <a href="kaqs-quiz.html" class="btn-go">Пройти диагностику →</a>
+      </div>
+    </div>`
+}
+
+function retryGenerate() {
+  document.getElementById('error-screen').classList.remove('show')
+  document.getElementById('loading-screen').style.display = 'flex'
+  document.getElementById('loading-screen').classList.remove('hidden')
+  init()
+}
+
+init()
+</script>
+</body>
+</html>

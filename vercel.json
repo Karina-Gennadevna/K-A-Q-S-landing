@@ -3,6 +3,9 @@
   "functions": {
     "api/create-payment.js": {
       "maxDuration": 15
+    },
+    "api/generate-roadmap.js": {
+      "maxDuration": 30
     }
   }
 }
