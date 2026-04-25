@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
   const amount = isPromo ? '1.00' : '14990.00'
 
   const origin = req.headers.origin || req.headers.referer || 'https://k-a-q-s-landing-1zsr.vercel.app'
-  const returnUrl = origin.replace(/\/$/, '') + '/thank-you.html'
+  const returnUrl = origin.replace(/\/$/, '') + '/roadmap.html'
 
   try {
     const response = await fetch('https://api.yookassa.ru/v3/payments', {

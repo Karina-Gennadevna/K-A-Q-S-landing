@@ -88,11 +88,12 @@ For templates pick 2-3 from: K_registry K_sop K_metrics K_onboard A_audit A_roi 
     const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (!jsonMatch) return res.status(500).json({ error: 'Invalid AI response', raw: text })
 
-    // Strip JS comments and trailing commas before parsing
+    // Clean and fix common JSON issues from LLM output
     const cleaned = jsonMatch[0]
       .replace(/\/\/[^\n]*/g, '')
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/,(\s*[}\]])/g, '$1')
+      .replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g, '$1"$2"$3')
 
     const roadmap = JSON.parse(cleaned)
     return res.status(200).json(roadmap)
