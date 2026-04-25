@@ -95,7 +95,16 @@ For templates pick 2-3 from: K_registry K_sop K_metrics K_onboard A_audit A_roi 
       .replace(/,(\s*[}\]])/g, '$1')
       .replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g, '$1"$2"$3')
 
-    const roadmap = JSON.parse(cleaned)
+    let roadmap
+    try {
+      roadmap = JSON.parse(cleaned)
+    } catch (e1) {
+      // Fix unescaped newlines / tabs inside string values and retry
+      const fixed = cleaned.replace(/"((?:[^"\\]|\\.)*)"/gs,
+        (_, inner) => '"' + inner.replace(/\r?\n/g, ' ').replace(/\t/g, ' ') + '"'
+      )
+      roadmap = JSON.parse(fixed)
+    }
     return res.status(200).json(roadmap)
   } catch (e) {
     return res.status(500).json({ error: e.message })
