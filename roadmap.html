@@ -404,70 +404,120 @@
 
     /* ── MONTH PLAN ── */
     .month-block {
-      margin-bottom: 40px;
+      margin-bottom: 48px;
     }
     .month-block:last-child { margin-bottom: 0; }
     .month-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    .month-num {
-      font-family: var(--mono);
-      font-size: .65rem;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--blue);
-      background: var(--blue-dim);
-      padding: 5px 12px;
-      border-radius: 6px;
-      white-space: nowrap;
-    }
-    .month-theme {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text1);
-    }
-    .month-tasks {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .task-row {
+      gap: 0;
+      margin-bottom: 20px;
       background: var(--bg2);
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 14px 16px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
+      border-radius: 14px;
+      overflow: hidden;
     }
-    .task-axis-tag {
-      font-family: var(--mono);
-      font-size: .6rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      padding: 3px 8px;
-      border-radius: 5px;
+    .month-num-block {
+      background: var(--blue-dim);
+      border-right: 1px solid rgba(59,130,246,.15);
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
       flex-shrink: 0;
-      margin-top: 2px;
+    }
+    .month-num-label {
+      font-family: var(--mono);
+      font-size: .55rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: .7;
+    }
+    .month-num-digit {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .month-theme {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--text1);
+      padding: 18px 22px;
+      line-height: 1.3;
+    }
+    .month-tasks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 580px) { .month-tasks { grid-template-columns: 1fr; } }
+    .task-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .task-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .task-card.tc-K::before { background: #60A5FA; }
+    .task-card.tc-A::before { background: #C084FC; }
+    .task-card.tc-Q::before { background: #4ADE80; }
+    .task-card.tc-S::before { background: #FCD34D; }
+    .task-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .task-axis-icon {
+      font-family: var(--mono);
+      font-size: .75rem;
+      font-weight: 700;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
     .tag-K { background: rgba(59,130,246,.12); color: #60A5FA; }
     .tag-A { background: rgba(168,85,247,.12); color: #C084FC; }
     .tag-Q { background: rgba(34,197,94,.12); color: #4ADE80; }
     .tag-S { background: rgba(245,158,11,.12); color: #FCD34D; }
-    .task-body { flex: 1; }
+    .task-axis-name {
+      font-size: .72rem;
+      color: var(--text4);
+      font-weight: 500;
+    }
     .task-action {
-      font-size: .88rem;
+      font-size: .84rem;
       font-weight: 500;
       color: var(--text1);
-      margin-bottom: 4px;
+      line-height: 1.45;
+      flex: 1;
     }
     .task-impact {
-      font-size: .78rem;
+      font-size: .75rem;
       color: var(--text3);
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 6px;
+      padding: 6px 10px;
+      line-height: 1.4;
     }
     .task-impact::before { content: '→ '; color: var(--text4); }
 
@@ -1143,20 +1193,24 @@ function renderRoadmap() {
     { key: 'month2', label: 'Месяц 2', data: r.month2 },
     { key: 'month3', label: 'Месяц 3', data: r.month3 },
   ]
-  months.forEach(m => {
+  months.forEach((m, mi) => {
     if (!m.data) return
     const tasks = (m.data.tasks || []).map(t => `
-      <div class="task-row">
-        <div class="task-axis-tag tag-${t.axis}">${t.axis}</div>
-        <div class="task-body">
-          <div class="task-action">${t.action}</div>
-          <div class="task-impact">${t.impact}</div>
+      <div class="task-card tc-${t.axis}">
+        <div class="task-card-top">
+          <div class="task-axis-icon tag-${t.axis}">${t.axis}</div>
+          <div class="task-axis-name">${AXIS_NAMES[t.axis]}</div>
         </div>
+        <div class="task-action">${t.action}</div>
+        <div class="task-impact">${t.impact}</div>
       </div>`).join('')
     planEl.innerHTML += `
       <div class="month-block">
         <div class="month-header">
-          <div class="month-num">${m.label}</div>
+          <div class="month-num-block">
+            <div class="month-num-label">Месяц</div>
+            <div class="month-num-digit">${mi + 1}</div>
+          </div>
           <div class="month-theme">${m.data.theme || ''}</div>
         </div>
         <div class="month-tasks">${tasks}</div>
