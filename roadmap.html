@@ -437,7 +437,7 @@
       </div>
       <div class="hero-nav-right">
         <span class="nav-pill">OWNER LEVEL</span>
-        <span class="nav-tag">DOCS/2025</span>
+        <span class="nav-tag" id="nav-year">DOCS/2026</span>
       </div>
     </nav>
     <div class="hero-body">
@@ -544,7 +544,7 @@
             <div class="rz-urgency">
               <div class="rz-urgency-ghost">02</div>
               <div class="rz-urgency-title">Упущенная выгода</div>
-              <div class="rz-urgency-text">Стоимость отсутствия системы нарастает каждый месяц в виде <strong>неэффективного использования времени команды</strong> и потерь в конверсии.</div>
+              <div class="rz-urgency-text" id="rz-point2">Стоимость отсутствия системы нарастает каждый месяц в виде <strong>неэффективного использования времени команды</strong> и потерь в конверсии.</div>
             </div>
           </div>
         </div>
@@ -571,9 +571,9 @@
     <!-- 7. TRANSFORMATION -->
     <div class="section">
       <div class="section-eyebrow">Executive Transformation</div>
+      <div class="section-h2">Что изменится через 90 дней</div>
       <div class="transform-inner">
         <div class="transform-left">
-          <h2 class="transform-h2">Новая архитектура <em>вашего бизнеса</em></h2>
           <p class="transform-desc">Результат внедрения 90-дневной стратегии — переход от операционного хаоса к управляемой архитектуре роста.</p>
           <div class="transform-metrics">
             <div class="transform-metric">
@@ -877,7 +877,8 @@ function renderRoadmap() {
   document.getElementById('cv-timesave').textContent = Math.max(15, Math.round((100 - d.scores.A) * 0.28)) + 'Ч / НЕД'
 
   // Fin metric for transformation section
-  document.getElementById('fin-metric').textContent = Math.min(94, d.index + 37) + '/100'
+  const finScore = Math.min(95, Math.round(d.scores.S + (100 - d.scores.S) * 0.42))
+  document.getElementById('fin-metric').textContent = finScore + '/100'
 
   // Axis grid
   const axisGrid = document.getElementById('axis-grid')
@@ -901,6 +902,14 @@ function renderRoadmap() {
         </div>
       </div>`
   })
+
+  // Dynamic urgency panel
+  const worstAx = ['K','A','Q','S'].reduce((a,b) => d.scores[a] < d.scores[b] ? a : b)
+  const leakHours = Math.max(20, Math.round((100 - d.scores.A) * 0.45))
+  document.getElementById('rz-point1').innerHTML =
+    `Ось <strong>${AXIS_NAMES[worstAx]}</strong> на уровне ${d.scores[worstAx]}% — при таком показателе масштабирование создаёт управленческую энтропию. Риск потери контроля нарастает нелинейно.`
+  document.getElementById('rz-point2').innerHTML =
+    `<strong>${leakHours}+ часов в месяц</strong> уходит на задачи, которые должна выполнять система. Это прямые потери в операционной эффективности и недополученная выручка.`
 
   // Red zones
   const rzEl = document.getElementById('red-zones')
@@ -929,9 +938,13 @@ function renderRoadmap() {
     tab.onclick = () => switchTab(mi)
     tabsEl.appendChild(tab)
 
-    const rows = (m.data.tasks||[]).map((t,ti) => `
+    const rows = (m.data.tasks||[]).map((t,ti) => {
+      const axScore = d.scores[t.axis] || 50
+      const priority = axScore < 50 ? 'ВЫСОКИЙ' : axScore < 70 ? 'СРЕДНИЙ' : 'ПЛАНОВЫЙ'
+      const priorityColor = axScore < 50 ? 'var(--red)' : axScore < 70 ? 'var(--amber)' : 'var(--green)'
+      return `
       <div class="plan-row">
-        <div class="plan-row-num">0${ti+1}</div>
+        <div class="plan-row-num">${String(ti+1).padStart(2,'0')}</div>
         <div class="plan-row-body">
           <div class="plan-row-title">
             ${t.action}
@@ -940,15 +953,16 @@ function renderRoadmap() {
           <div class="plan-row-sub">${t.impact}</div>
         </div>
         <div class="plan-row-right">
-          <span class="plan-priority">ПРИОРИТЕТ: ВЫСОКИЙ</span>
+          <span class="plan-priority" style="color:${priorityColor}">ПРИОРИТЕТ: ${priority}</span>
           <div class="plan-arrow">↗</div>
         </div>
-      </div>`).join('')
+      </div>`}).join('')
 
-    const resultMetrics = (m.data.tasks||[]).map(t =>
+    const uniqueAxes = [...new Set((m.data.tasks||[]).map(t=>t.axis))]
+    const resultMetrics = uniqueAxes.map(ax =>
       `<div class="month-result-metric">
-        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        ${AXIS_NAMES[t.axis]} · ${t.axis}
+        <span style="width:8px;height:8px;border-radius:50%;background:${AXIS_COLORS[ax]};display:inline-block;flex-shrink:0"></span>
+        ${AXIS_NAMES[ax]}
       </div>`).join('')
 
     const panel = document.createElement('div')
