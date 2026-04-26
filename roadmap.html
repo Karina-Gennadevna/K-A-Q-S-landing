@@ -103,8 +103,8 @@
     .gauge-eyebrow{font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text4);margin-bottom:20px;text-align:center}
     .gauge-wrap{position:relative;width:200px;height:200px}
     .gauge-svg{width:200px;height:200px}
-    .gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:7;stroke-linecap:round;stroke-dasharray:424 566;transform:rotate(135deg);transform-origin:100px 100px}
-    .gauge-fill{fill:none;stroke:url(#gGrad);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 566;transform:rotate(135deg);transform-origin:100px 100px;transition:stroke-dasharray 1.6s cubic-bezier(.16,1,.3,1)}
+    .gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:7;stroke-linecap:round;stroke-dasharray:386 515;transform:rotate(135deg);transform-origin:100px 100px}
+    .gauge-fill{fill:none;stroke:url(#gGrad);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 515;transform:rotate(135deg);transform-origin:100px 100px;transition:stroke-dasharray 1.6s cubic-bezier(.16,1,.3,1)}
     .gauge-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
     .gauge-num{font-size:3.6rem;font-weight:800;color:var(--text1);line-height:1;letter-spacing:-.04em}
     .gauge-num-sub{font-family:var(--mono);font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text4);margin-top:5px}
@@ -963,7 +963,7 @@ function animateAll() {
   if (!quizData) return
   // Gauge
   setTimeout(() => {
-    const circ = 565.5, arcMax = 424
+    const circ = 515.2, arcMax = 386
     const fill = arcMax * quizData.index / 100
     const arc = document.getElementById('gauge-arc')
     if (arc) arc.style.strokeDasharray = `${fill} ${circ}`
