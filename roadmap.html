@@ -413,10 +413,16 @@
 <!-- PRINT BAR -->
 <div class="print-bar" id="print-bar">
   <div class="print-logo">K-A-Q-S™</div>
-  <button class="print-btn" onclick="window.print()">
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 11v3h8v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Сохранить PDF
-  </button>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button class="print-btn" style="background:transparent;border:1px solid var(--border2);color:var(--text2)" onclick="downloadRoadmap()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l-3-3m3 3l3-3M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Скачать HTML
+    </button>
+    <button class="print-btn" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 11v3h8v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Сохранить PDF
+    </button>
+  </div>
 </div>
 
 <!-- DOCUMENT -->
@@ -774,6 +780,18 @@ let quizData = null
 let roadmapData = null
 
 async function init() {
+  // Embedded mode: downloaded file with baked-in data
+  if (window.__EMBEDDED_DATA__) {
+    quizData = window.__EMBEDDED_DATA__.quizData
+    roadmapData = window.__EMBEDDED_DATA__.roadmapData
+    document.getElementById('loading-screen').style.display = 'none'
+    renderRoadmap()
+    document.getElementById('roadmap').classList.add('visible')
+    document.getElementById('print-bar').classList.add('visible')
+    animateAll()
+    return
+  }
+
   const raw = localStorage.getItem('kaqs_results')
   const history = raw ? JSON.parse(raw) : []
   quizData = history[0] || null
@@ -808,6 +826,19 @@ async function init() {
     errScreen.classList.add('show')
     document.getElementById('error-msg').textContent = e.message || 'Попробуйте обновить страницу.'
   }
+}
+
+function downloadRoadmap() {
+  if (!quizData || !roadmapData) return
+  const embed = `<script>window.__EMBEDDED_DATA__=${JSON.stringify({quizData, roadmapData})}<\/script>`
+  let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML
+  html = html.replace('</head>', embed + '\n</head>')
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'})
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = 'K-AQS-' + (quizData.name || 'roadmap').replace(/\s+/g,'-') + '.html'
+  a.click()
+  URL.revokeObjectURL(a.href)
 }
 
 function setStep(n) {
