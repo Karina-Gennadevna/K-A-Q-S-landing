@@ -6,1009 +6,334 @@
   <title>Roadmap K-A-Q-S™</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,700;1,900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0B0F14;
-      --bg2: #0F1521;
-      --bg3: #131C2A;
-      --line: rgba(255,255,255,.07);
-      --text1: #F0F4F8;
-      --text2: #CBD5E1;
-      --text3: #8A9BB0;
-      --text4: #4A5568;
-      --blue: #3B82F6;
-      --blue-dim: rgba(59,130,246,.12);
-      --green: #22C55E;
-      --red: #EF4444;
-      --amber: #F59E0B;
-      --mono: 'JetBrains Mono', monospace;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#08090D;
+      --card:#0E0F17;
+      --card2:#131521;
+      --border:rgba(255,255,255,.07);
+      --border2:rgba(255,255,255,.12);
+      --blue:#2B79FF;
+      --blue-dim:rgba(43,121,255,.1);
+      --blue-glow:rgba(43,121,255,.25);
+      --gold:#C9A050;
+      --gold-dim:rgba(201,160,80,.1);
+      --red:#FF3B30;
+      --red-dim:rgba(255,59,48,.08);
+      --green:#30D158;
+      --amber:#F59E0B;
+      --text1:#FFFFFF;
+      --text2:#C0CBD8;
+      --text3:#6B7A90;
+      --text4:#353D4E;
+      --mono:'JetBrains Mono',monospace;
     }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text2);
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text2);-webkit-font-smoothing:antialiased;min-height:100vh}
 
     /* ── LOADING ── */
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      gap: 24px;
-      transition: opacity .5s;
-    }
-    #loading-screen.hidden { opacity: 0; pointer-events: none; }
-    .loading-logo {
-      font-family: var(--mono);
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--blue);
-    }
-    .loading-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text1);
-      text-align: center;
-    }
-    .loading-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 280px;
-    }
-    .loading-step {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: .82rem;
-      color: var(--text3);
-      transition: color .3s;
-    }
-    .loading-step.active { color: var(--text1); }
-    .loading-step.done { color: var(--green); }
-    .step-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--text4);
-      flex-shrink: 0;
-      transition: background .3s;
-    }
-    .loading-step.active .step-dot { background: var(--blue); animation: pulse 1s infinite; }
-    .loading-step.done .step-dot { background: var(--green); }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    #loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:24px;transition:opacity .5s}
+    #loading-screen.hidden{opacity:0;pointer-events:none}
+    .loading-logo{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+    .loading-title{font-size:1.05rem;font-weight:600;color:var(--text1);text-align:center}
+    .loading-steps{display:flex;flex-direction:column;gap:10px;width:280px}
+    .loading-step{display:flex;align-items:center;gap:12px;font-size:.82rem;color:var(--text3);transition:color .3s}
+    .loading-step.active{color:var(--text1)}
+    .loading-step.done{color:var(--green)}
+    .step-dot{width:8px;height:8px;border-radius:50%;background:var(--text4);flex-shrink:0;transition:background .3s}
+    .loading-step.active .step-dot{background:var(--blue);animation:pulse 1s infinite}
+    .loading-step.done .step-dot{background:var(--green)}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
     /* ── ERROR ── */
-    #error-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      gap: 16px;
-      padding: 24px;
-      text-align: center;
-    }
-    #error-screen.show { display: flex; }
+    #error-screen{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:16px;padding:24px;text-align:center}
+    #error-screen.show{display:flex}
 
-    /* ── PRINT BUTTON ── */
-    .print-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(11,15,20,.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 50;
-      transform: translateY(-100%);
-      transition: transform .4s cubic-bezier(.16,1,.3,1);
-    }
-    .print-bar.visible { transform: translateY(0); }
-    .print-logo {
-      font-family: var(--mono);
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .2em;
-      color: var(--blue);
-    }
-    .print-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--blue);
-      color: #fff;
-      font-size: .82rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .print-btn:hover { background: #2563EB; }
+    /* ── PRINT BAR ── */
+    .print-bar{position:fixed;top:0;left:0;right:0;background:rgba(8,9,13,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:50;transform:translateY(-100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+    .print-bar.visible{transform:translateY(0)}
+    .print-logo{font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.22em;color:var(--blue)}
+    .print-btn{display:flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-size:.82rem;font-weight:600;padding:8px 18px;border-radius:8px;border:none;cursor:pointer;transition:all .2s}
+    .print-btn:hover{background:#1a6aff}
 
-    /* ── DOCUMENT ── */
-    #roadmap {
-      display: none;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 24px 80px;
-    }
-    #roadmap.visible { display: block; }
+    /* ── ROADMAP DOC ── */
+    #roadmap{display:none}
+    #roadmap.visible{display:block}
 
-    /* ── COVER ── */
-    :root {
-      --gold: #C9A84C;
-      --gold-dim: rgba(201,168,76,.1);
-    }
-    .cover {
-      border-bottom: 1px solid var(--line);
-      position: relative;
-      overflow: hidden;
-      background: #060912;
-    }
-    .cover::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(59,130,246,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59,130,246,.035) 1px, transparent 1px);
-      background-size: 64px 64px;
-      pointer-events: none;
-    }
-    .cover-bar {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
-    }
-    .cover-bar-logo {
-      font-family: var(--mono);
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .28em;
-      color: var(--blue);
-      text-transform: uppercase;
-    }
-    .cover-bar-right {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-    .cover-bar-tag {
-      font-family: var(--mono);
-      font-size: .56rem;
-      letter-spacing: .16em;
-      color: var(--text4);
-      text-transform: uppercase;
-    }
-    .cover-bar-date {
-      font-family: var(--mono);
-      font-size: .66rem;
-      color: var(--text3);
-    }
-    .cover-main {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      min-height: 86vh;
-      align-items: center;
-    }
-    @media (max-width: 760px) { .cover-main { grid-template-columns: 1fr; min-height: auto; } }
+    /* ── WRAP ── */
+    .wrap{max-width:1040px;margin:0 auto;padding:0 40px}
+    @media(max-width:700px){.wrap{padding:0 20px}}
 
-    /* left score panel */
-    .cover-left {
-      padding: 64px 48px 64px 0;
-      border-right: 1px solid rgba(255,255,255,.05);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      height: 100%;
-      justify-content: center;
-      position: relative;
-    }
-    .cover-left::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: -1px;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 60%;
-      background: linear-gradient(to bottom, transparent, var(--blue), transparent);
-      opacity: .3;
-    }
-    .score-eyebrow {
-      font-family: var(--mono);
-      font-size: .56rem;
-      font-weight: 600;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--text4);
-    }
-    .score-num-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 10px;
-      line-height: 1;
-    }
-    .score-big {
-      font-size: clamp(96px, 13vw, 136px);
-      font-weight: 800;
-      letter-spacing: -.05em;
-      color: var(--text1);
-      line-height: .9;
-      transition: color .6s;
-    }
-    .score-denom-big {
-      font-size: 1.6rem;
-      color: var(--text4);
-      padding-bottom: 14px;
-      font-weight: 300;
-    }
-    .score-bar-track {
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,.06);
-      border-radius: 1px;
-      overflow: hidden;
-    }
-    .score-bar-fill {
-      height: 100%;
-      border-radius: 1px;
-      width: 0;
-      transition: width 1.4s cubic-bezier(.16,1,.3,1), box-shadow .6s;
-    }
-    .zone-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--mono);
-      font-size: .64rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      padding: 8px 16px;
-      border-radius: 30px;
-      width: fit-content;
-    }
-    .zone-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      animation: blink 2s infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
-    .zone-badge.low  { background:rgba(239,68,68,.08); color:#F87171; border:1px solid rgba(239,68,68,.18); }
-    .zone-badge.low .zone-dot  { background:#F87171; box-shadow:0 0 6px #F87171; }
-    .zone-badge.mid  { background:var(--gold-dim); color:var(--gold); border:1px solid rgba(201,168,76,.2); }
-    .zone-badge.mid .zone-dot  { background:var(--gold); box-shadow:0 0 6px var(--gold); }
-    .zone-badge.good { background:rgba(34,197,94,.08); color:#4ADE80; border:1px solid rgba(34,197,94,.18); }
-    .zone-badge.good .zone-dot { background:#4ADE80; box-shadow:0 0 6px #4ADE80; }
-    .cover-owner-line {
-      font-size: .8rem;
-      color: var(--text4);
-      padding-top: 8px;
-    }
-    .cover-owner-line strong { color: var(--text2); font-weight: 500; }
+    /* ══════════════════════════════════════════
+       1. HERO
+    ══════════════════════════════════════════ */
+    .hero{min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse 90% 70% at 50% 30%,#0F1120 0%,#08090D 65%)}
+    .hero-nav{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;border-bottom:1px solid var(--border)}
+    .hero-nav-logo{display:flex;align-items:center;gap:10px}
+    .logo-k{width:28px;height:28px;background:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0}
+    .logo-name{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.18em;color:var(--text1)}
+    .hero-nav-right{display:flex;align-items:center;gap:20px}
+    .nav-pill{font-family:var(--mono);font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--border2);border-radius:20px;color:var(--text2)}
+    .nav-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--text4)}
 
-    /* right text panel */
-    .cover-right {
-      padding: 64px 0 64px 64px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .cover-report-tag {
-      font-family: var(--mono);
-      font-size: .56rem;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--text4);
-      margin-bottom: 36px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .cover-report-tag::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--text4);
-      flex-shrink: 0;
-    }
-    .cover-headline {
-      font-size: clamp(2rem, 3.6vw, 3rem);
-      font-weight: 800;
-      color: var(--text1);
-      letter-spacing: -.04em;
-      line-height: 1.08;
-      margin-bottom: 28px;
-    }
-    .cover-accent-line {
-      width: 40px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--blue), transparent);
-      margin-bottom: 28px;
-      border-radius: 1px;
-    }
-    .cover-subline {
-      font-size: .98rem;
-      color: var(--text3);
-      line-height: 1.72;
-      margin-bottom: 52px;
-      max-width: 460px;
-    }
-    .cover-meta {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      padding-top: 28px;
-      border-top: 1px solid rgba(255,255,255,.06);
-    }
-    .cover-meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .cover-meta-label {
-      font-family: var(--mono);
-      font-size: .54rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--text4);
-    }
-    .cover-meta-val {
-      font-size: .88rem;
-      font-weight: 500;
-      color: var(--text2);
-    }
+    .hero-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 40px 40px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.58rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--border2);border-radius:20px;padding:7px 16px;color:var(--text3);margin-bottom:44px}
+    .hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
 
-    /* ── SECTIONS ── */
-    .section {
-      padding: 64px 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .section:last-child { border-bottom: none; }
-    .section-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--mono);
-      font-size: .56rem;
-      font-weight: 600;
-      letter-spacing: .2em;
-      color: var(--blue);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--blue);
-      flex-shrink: 0;
-    }
-    .section-title {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--text1);
-      letter-spacing: -.03em;
-      margin-bottom: 32px;
-    }
-    .section-head-row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 28px;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .section-head-row .section-title { margin-bottom: 0; }
+    .hero-h1{font-size:clamp(3.2rem,9vw,7.5rem);font-weight:900;line-height:1;letter-spacing:-.04em;color:var(--text1);margin-bottom:28px}
+    .hero-h1 em{font-style:italic;color:var(--blue);font-family:Georgia,'Times New Roman',serif;font-weight:400}
 
-    /* ── AXIS BARS ── */
-    .axis-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    @media (max-width: 520px) { .axis-grid { grid-template-columns: 1fr; } }
-    .axis-row {
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px 16px;
-    }
-    .axis-row-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-    .axis-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .axis-key {
-      font-family: var(--mono);
-      font-size: .68rem;
-      font-weight: 700;
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 5px;
-      background: var(--blue-dim);
-      color: var(--blue);
-      flex-shrink: 0;
-    }
-    .axis-name {
-      font-size: .82rem;
-      font-weight: 500;
-      color: var(--text2);
-    }
-    .axis-name span { display: none; }
-    .axis-pct {
-      font-family: var(--mono);
-      font-size: .84rem;
-      font-weight: 700;
-    }
-    .axis-track {
-      height: 5px;
-      background: rgba(255,255,255,.06);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .axis-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width 1s cubic-bezier(.16,1,.3,1);
-      width: 0;
-    }
-    .axis-insight { display: none; }
+    .hero-sub{font-size:1.05rem;color:var(--text3);line-height:1.7;max-width:520px;margin:0 auto 48px}
+    .hero-sub strong{color:var(--text2);font-weight:600}
 
-    /* ── PROFILE CARD ── */
-    .profile-card {
-      background: var(--bg3);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 18px 20px;
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-    .profile-left { flex-shrink: 0; }
-    .profile-label {
-      font-family: var(--mono);
-      font-size: .58rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--text4);
-      margin-bottom: 4px;
-    }
-    .profile-name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text1);
-    }
-    .profile-summary {
-      font-size: .82rem;
-      color: var(--text3);
-      line-height: 1.6;
-      padding-top: 2px;
-    }
+    .hero-foot{display:flex;align-items:center;justify-content:center;gap:32px;padding:24px 40px;border-top:1px solid var(--border)}
+    .hero-foot-item{display:flex;flex-direction:column;gap:3px;align-items:center}
+    .hero-foot-label{font-family:var(--mono);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text4)}
+    .hero-foot-val{font-size:.88rem;font-weight:500;color:var(--text2)}
 
-    /* ── RED ZONES ── */
-    .red-zones {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .red-zone-card {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
-    }
-    .red-zone-card:last-child { border-bottom: none; }
-    .rz-num {
-      font-family: var(--mono);
-      font-size: .65rem;
-      font-weight: 700;
-      color: var(--red);
-      opacity: .5;
-      flex-shrink: 0;
-      padding-top: 3px;
-      letter-spacing: .06em;
-    }
-    .rz-body { flex: 1; }
-    .rz-title {
-      font-size: .9rem;
-      font-weight: 600;
-      color: var(--text1);
-      margin-bottom: 4px;
-    }
-    .rz-accent { color: var(--red); }
-    .rz-desc {
-      font-size: .8rem;
-      color: var(--text3);
-      line-height: 1.55;
-    }
+    /* ══════════════════════════════════════════
+       2. SCORE CARD
+    ══════════════════════════════════════════ */
+    .score-section{padding:64px 0}
+    .score-card{background:var(--card);border:1px solid var(--border);border-top:1px solid var(--blue);border-radius:20px;display:grid;grid-template-columns:340px 1fr;overflow:hidden;box-shadow:0 0 60px rgba(43,121,255,.06)}
+    @media(max-width:700px){.score-card{grid-template-columns:1fr}}
 
-    /* ── MONTH TABS ── */
-    .tag-K { background: rgba(59,130,246,.12); color: #60A5FA; }
-    .tag-A { background: rgba(168,85,247,.12); color: #C084FC; }
-    .tag-Q { background: rgba(34,197,94,.12); color: #4ADE80; }
-    .tag-S { background: rgba(245,158,11,.12); color: #FCD34D; }
+    .score-gauge-side{padding:40px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:0;background:rgba(0,0,0,.15)}
+    .gauge-eyebrow{font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text4);margin-bottom:20px;text-align:center}
+    .gauge-wrap{position:relative;width:200px;height:200px}
+    .gauge-svg{width:200px;height:200px}
+    .gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:7;stroke-linecap:round;stroke-dasharray:424 566;transform:rotate(135deg);transform-origin:100px 100px}
+    .gauge-fill{fill:none;stroke:url(#gGrad);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 566;transform:rotate(135deg);transform-origin:100px 100px;transition:stroke-dasharray 1.6s cubic-bezier(.16,1,.3,1)}
+    .gauge-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .gauge-num{font-size:3.6rem;font-weight:800;color:var(--text1);line-height:1;letter-spacing:-.04em}
+    .gauge-num-sub{font-family:var(--mono);font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text4);margin-top:5px}
 
-    .month-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .month-tab {
-      font-family: var(--mono);
-      font-size: .64rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 9px 22px;
-      border-radius: 30px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--text4);
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .month-tab.active {
-      background: var(--text1);
-      color: #0B0F14;
-      border-color: var(--text1);
-    }
-    .month-tab:hover:not(.active) { color: var(--text2); border-color: rgba(255,255,255,.2); }
+    .score-info-side{padding:40px 44px;display:flex;flex-direction:column;justify-content:center;gap:20px}
+    .zone-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:7px 14px;border-radius:20px;width:fit-content}
+    .zone-badge.low{background:var(--red-dim);color:#FF6B6B;border:1px solid rgba(255,59,48,.2)}
+    .zone-badge.mid{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,160,80,.2)}
+    .zone-badge.good{background:rgba(48,209,88,.08);color:#4ADE80;border:1px solid rgba(48,209,88,.2)}
+    .zone-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:blink 2s infinite}
+    .zone-badge.low .zone-dot{background:#FF6B6B}
+    .zone-badge.mid .zone-dot{background:var(--gold)}
+    .zone-badge.good .zone-dot{background:#4ADE80}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
 
-    .month-panel { display: none; }
-    .month-panel.active {
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      gap: 20px;
-      align-items: start;
-    }
-    @media (max-width: 680px) { .month-panel.active { grid-template-columns: 1fr; } }
+    .score-verdict{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:var(--text1);line-height:1.15;letter-spacing:-.03em}
+    .score-summary{font-size:.9rem;color:var(--text3);line-height:1.65}
+    .score-summary strong{color:var(--text2);font-weight:600}
+    .score-metrics{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+    .score-metric{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px 16px}
+    .score-metric-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem}
+    .score-metric-icon.blue{background:var(--blue-dim)}
+    .score-metric-icon.gold{background:var(--gold-dim)}
+    .score-metric span{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.06em;color:var(--text3);text-transform:uppercase}
+    .score-metric strong{color:var(--text1)}
 
-    .month-task-list { display: flex; flex-direction: column; gap: 10px; }
-    .month-task-item {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 16px 18px;
-      transition: border-color .2s;
-    }
-    .month-task-item:hover { border-color: rgba(255,255,255,.12); }
-    .month-task-num {
-      font-family: var(--mono);
-      font-size: .6rem;
-      font-weight: 600;
-      color: var(--text4);
-      padding-top: 3px;
-      flex-shrink: 0;
-      width: 20px;
-    }
-    .month-task-body { flex: 1; }
-    .month-task-axis {
-      font-family: var(--mono);
-      font-size: .58rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      padding: 2px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 7px;
-    }
-    .month-task-action {
-      font-size: .86rem;
-      font-weight: 500;
-      color: var(--text1);
-      line-height: 1.45;
-      margin-bottom: 5px;
-    }
-    .month-task-impact {
-      font-size: .75rem;
-      color: var(--text3);
-    }
-    .month-task-impact::before { content: '→ '; color: var(--text4); }
+    /* ══════════════════════════════════════════
+       SECTION COMMON
+    ══════════════════════════════════════════ */
+    .section{padding:72px 0;border-top:1px solid var(--border)}
+    .section-eyebrow{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+    .section-eyebrow::before{content:'';width:28px;height:1px;background:var(--blue);flex-shrink:0}
+    .section-h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--text1);letter-spacing:-.04em;line-height:1.1;margin-bottom:36px}
+    .section-head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+    .section-head-row .section-h2{margin-bottom:0}
 
-    .month-result-card {
-      background: var(--bg3);
-      border: 1px solid rgba(201,168,76,.15);
-      border-radius: 14px;
-      padding: 22px;
-      position: sticky;
-      top: 72px;
-    }
-    .month-result-crown {
-      font-size: 1.3rem;
-      margin-bottom: 12px;
-    }
-    .month-result-label {
-      font-family: var(--mono);
-      font-size: .54rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-    .month-result-title {
-      font-size: .95rem;
-      font-weight: 700;
-      color: var(--text1);
-      line-height: 1.4;
-      margin-bottom: 14px;
-    }
-    .month-result-axes { display: flex; gap: 6px; flex-wrap: wrap; }
-    .mra {
-      font-family: var(--mono);
-      font-size: .58rem;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 4px;
-    }
+    /* ══════════════════════════════════════════
+       3. DIAGNOSTIC PROFILE
+    ══════════════════════════════════════════ */
+    .axis-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    @media(max-width:720px){.axis-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:420px){.axis-grid{grid-template-columns:1fr}}
 
-    /* ── TOOLKIT GRID ── */
-    .toolkit-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-    }
-    @media (max-width: 700px) { .toolkit-grid { grid-template-columns: repeat(3, 1fr); } }
-    .toolkit-tile {
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 22px 12px 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: border-color .2s, background .2s, transform .15s;
-      text-align: center;
-      user-select: none;
-    }
-    .toolkit-tile:hover {
-      background: var(--bg3);
-      border-color: rgba(255,255,255,.14);
-      transform: translateY(-2px);
-    }
-    .toolkit-tile:active { transform: translateY(0); }
-    .toolkit-tile.owner-tile { border-color: rgba(201,168,76,.12); }
-    .toolkit-tile.owner-tile:hover { border-color: rgba(201,168,76,.3); }
-    .toolkit-icon {
-      width: 42px;
-      height: 42px;
-      background: rgba(255,255,255,.05);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text3);
-      flex-shrink: 0;
-    }
-    .toolkit-name {
-      font-family: var(--mono);
-      font-size: .56rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text3);
-      line-height: 1.4;
-    }
+    .axis-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+    .axis-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+    .axis-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+    .axis-icon-box{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .axis-ghost{font-size:4rem;font-weight:900;color:rgba(255,255,255,.04);line-height:1;letter-spacing:-.06em;position:absolute;top:10px;right:14px;pointer-events:none;user-select:none}
+    .axis-card-name{font-size:1.05rem;font-weight:700;color:var(--text1);margin-bottom:4px}
+    .axis-card-sub{font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text4)}
+    .axis-card-pct{font-size:2.4rem;font-weight:800;letter-spacing:-.04em;margin:14px 0 8px;line-height:1}
+    .axis-bar-row{display:flex;align-items:center;gap:8px}
+    .axis-bar-track{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+    .axis-bar-fill{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+    .axis-efficiency{font-family:var(--mono);font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text4);white-space:nowrap}
 
-    /* ── MODAL ── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.8);
-      backdrop-filter: blur(8px);
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-box {
-      background: #0F1521;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 18px;
-      max-width: 760px;
-      width: 100%;
-      max-height: 85vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      animation: modalIn .25s cubic-bezier(.16,1,.3,1);
-    }
-    @keyframes modalIn { from{opacity:0;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
-    .modal-head {
-      padding: 20px 24px 16px;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .modal-title { font-size: 1.05rem; font-weight: 700; color: var(--text1); }
-    .modal-sub { font-size: .8rem; color: var(--text3); margin-top: 3px; }
-    .modal-close {
-      background: rgba(255,255,255,.06);
-      border: none;
-      color: var(--text3);
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all .15s;
-    }
-    .modal-close:hover { background: rgba(255,255,255,.12); color: var(--text1); }
-    .modal-body {
-      overflow-y: auto;
-      padding: 20px 24px 24px;
-    }
-    .modal-table-wrap {
-      overflow-x: auto;
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 10px;
-    }
-    .modal-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .82rem;
-    }
-    .modal-table th {
-      background: rgba(255,255,255,.05);
-      color: var(--text3);
-      font-weight: 600;
-      font-family: var(--mono);
-      font-size: .7rem;
-      padding: 10px 14px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      white-space: nowrap;
-    }
-    .modal-table td {
-      padding: 9px 14px;
-      color: var(--text2);
-      border-bottom: 1px solid rgba(255,255,255,.04);
-      min-width: 80px;
-    }
-    .modal-table td[contenteditable] {
-      outline: none;
-      cursor: text;
-      transition: background .15s;
-    }
-    .modal-table td[contenteditable]:hover { background: rgba(255,255,255,.03); }
-    .modal-table td[contenteditable]:focus {
-      background: rgba(59,130,246,.08);
-      box-shadow: inset 0 0 0 1px rgba(59,130,246,.35);
-    }
-    .modal-table tr:last-child td { border-bottom: none; }
-    .modal-table .empty-row td { color: var(--text4); font-style: italic; }
-    .modal-hint {
-      margin-top: 16px;
-      background: rgba(59,130,246,.06);
-      border: 1px solid rgba(59,130,246,.12);
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: .8rem;
-      color: var(--text3);
-      line-height: 1.6;
-    }
-    .modal-footer {
-      padding: 14px 24px;
-      border-top: 1px solid rgba(255,255,255,.07);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    .modal-edit-hint {
-      font-size: .75rem;
-      color: var(--text4);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .modal-dl-btn {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(34,197,94,.1);
-      border: 1px solid rgba(34,197,94,.2);
-      color: #4ADE80;
-      font-size: .8rem;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .2s;
-      white-space: nowrap;
-    }
-    .modal-dl-btn:hover { background: rgba(34,197,94,.18); border-color: rgba(34,197,94,.4); }
-    @media print {
-      .template-open-btn, .modal-overlay { display: none !important; }
-    }
-    .owner-section-label {
-      font-family: var(--mono);
-      font-size: .62rem;
-      font-weight: 600;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--text4);
-      margin-bottom: 12px;
-    }
-    .owner-templates-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 12px;
-    }
-    .owner-card {
-      background: var(--bg3);
-      border: 1px solid rgba(59,130,246,.15);
-      border-radius: 12px;
-      padding: 18px;
-    }
-    .owner-icon {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-    .owner-name {
-      font-size: .88rem;
-      font-weight: 600;
-      color: var(--text1);
-      margin-bottom: 6px;
-    }
-    .owner-desc {
-      font-size: .76rem;
-      color: var(--text3);
-      line-height: 1.55;
-    }
+    /* ══════════════════════════════════════════
+       4. RED ZONES
+    ══════════════════════════════════════════ */
+    .rz-container{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+    .rz-inner{display:grid;grid-template-columns:1fr 380px;min-height:400px}
+    @media(max-width:760px){.rz-inner{grid-template-columns:1fr}}
+    .rz-left{padding:40px;position:relative}
+    .rz-leakage-badge{display:inline-flex;align-items:center;gap:6px;background:var(--red-dim);border:1px solid rgba(255,59,48,.18);border-radius:6px;padding:5px 12px;font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:20px}
+    .rz-question{font-size:1.8rem;font-weight:700;color:var(--text1);letter-spacing:-.03em;margin-bottom:28px;line-height:1.2}
+    .rz-list{display:flex;flex-direction:column;gap:18px}
+    .rz-item{display:flex;gap:14px;align-items:flex-start}
+    .rz-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px;box-shadow:0 0 6px var(--red)}
+    .rz-item-title{font-size:.92rem;font-weight:600;color:var(--text1);margin-bottom:3px}
+    .rz-item-desc{font-size:.8rem;color:var(--text3);line-height:1.55}
+    .rz-ghost-icon{position:absolute;top:30px;right:30px;opacity:.04;pointer-events:none}
 
-    /* ── FOOTER ── */
-    .doc-footer {
-      padding: 48px 0 24px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: gap;
-      gap: 12px;
-    }
-    .doc-footer-logo {
-      font-family: var(--mono);
-      font-size: .65rem;
-      font-weight: 600;
-      letter-spacing: .2em;
-      color: var(--blue);
-    }
-    .doc-footer-note {
-      font-size: .72rem;
-      color: var(--text4);
-    }
+    .rz-right{border-left:1px solid var(--border);padding:40px;display:flex;flex-direction:column;gap:32px;background:rgba(0,0,0,.12)}
+    .rz-urgency{position:relative}
+    .rz-urgency-ghost{font-size:5rem;font-weight:900;color:rgba(255,255,255,.03);line-height:1;position:absolute;top:-16px;left:-8px;font-family:var(--mono);pointer-events:none}
+    .rz-urgency-title{font-size:1.05rem;font-weight:700;color:var(--text1);margin-bottom:8px;position:relative}
+    .rz-urgency-text{font-size:.82rem;color:var(--text3);line-height:1.6;position:relative}
+    .rz-urgency-text strong{color:var(--text2)}
 
-    /* ── PRINT ── */
-    @media print {
-      @page { margin: 20mm 18mm; }
-      body { background: #fff !important; color: #111 !important; }
-      .print-bar, #loading-screen, #error-screen { display: none !important; }
-      #roadmap { display: block !important; padding: 0; }
-      :root {
-        --bg: #fff; --bg2: #f8f9fa; --bg3: #f1f3f5;
-        --line: #e5e7eb;
-        --text1: #111; --text2: #374151; --text3: #6B7280; --text4: #9CA3AF;
-        --blue: #2563EB;
-        --blue-dim: rgba(37,99,235,.08);
-      }
-      .cover { page-break-after: always; background: #fff !important; }
-      .cover::before { display: none; }
-      .cover-main { min-height: auto; grid-template-columns: 240px 1fr; }
-      .cover-left { padding: 40px 32px 40px 0; }
-      .cover-right { padding: 40px 0 40px 40px; }
-      .score-big { font-size: 80px !important; color: #111 !important; text-shadow: none !important; }
-      .score-denom-big { color: #999 !important; }
-      .cover-bar { border-bottom-color: #e5e7eb; }
-      .cover-headline { color: #111 !important; }
-      .cover-subline { color: #555 !important; }
-      .zone-badge.low { color: #B91C1C !important; border-color: #FECACA !important; background: #FEF2F2 !important; }
-      .zone-badge.mid { color: #92400E !important; border-color: #FDE68A !important; background: #FFFBEB !important; }
-      .zone-badge.good { color: #14532D !important; border-color: #BBF7D0 !important; background: #F0FDF4 !important; }
-      .section { padding: 36px 0; }
-      .axis-key { background: rgba(37,99,235,.08) !important; color: #2563EB !important; }
-      .red-zone-card { background: rgba(239,68,68,.03) !important; border-color: rgba(239,68,68,.2) !important; }
-      .rz-title { color: #B91C1C !important; }
-      .tag-K { background: rgba(37,99,235,.08) !important; color: #1D4ED8 !important; }
-      .tag-A { background: rgba(126,34,206,.08) !important; color: #7E22CE !important; }
-      .tag-Q { background: rgba(21,128,61,.08) !important; color: #15803D !important; }
-      .tag-S { background: rgba(180,83,9,.08) !important; color: #B45309 !important; }
-    }
+    /* ══════════════════════════════════════════
+       5. ROADMAP MONTHS
+    ══════════════════════════════════════════ */
+    .month-tabs{display:flex;gap:6px}
+    .month-tab{font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;border-radius:24px;border:1px solid var(--border);background:transparent;color:var(--text4);cursor:pointer;transition:all .2s;white-space:nowrap}
+    .month-tab.active{background:var(--text1);color:#08090D;border-color:var(--text1)}
+    .month-tab:hover:not(.active){color:var(--text2);border-color:var(--border2)}
+
+    .month-panel{display:none}
+    .month-panel.active{display:grid;grid-template-columns:1fr 280px;gap:16px}
+    @media(max-width:680px){.month-panel.active{grid-template-columns:1fr}}
+
+    .plan-rows{display:flex;flex-direction:column;gap:8px}
+    .plan-row{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:border-color .2s,transform .15s;cursor:default}
+    .plan-row:hover{border-color:var(--border2);transform:translateX(3px)}
+    .plan-row-num{width:36px;height:36px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.6rem;font-weight:600;color:var(--text3);flex-shrink:0}
+    .plan-row-body{flex:1;min-width:0}
+    .plan-row-title{font-size:.92rem;font-weight:600;color:var(--text1);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+    .plan-axis-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .plan-row-sub{font-size:.78rem;color:var(--text3);line-height:1.45}
+    .plan-row-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .plan-priority{font-family:var(--mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text4)}
+    .plan-arrow{width:28px;height:28px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text4);font-size:.8rem}
+
+    .month-result-card{background:var(--card2);border:1px solid rgba(201,160,80,.15);border-radius:16px;padding:28px 22px;position:sticky;top:72px}
+    .month-result-crown{font-size:1.4rem;margin-bottom:14px}
+    .month-result-eyebrow{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .month-result-title{font-size:1.1rem;font-weight:700;color:var(--text1);line-height:1.35;margin-bottom:18px}
+    .month-result-metrics{display:flex;flex-direction:column;gap:8px}
+    .month-result-metric{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text3)}
+    .month-result-metric svg{color:var(--gold);flex-shrink:0}
+
+    /* ══════════════════════════════════════════
+       6. PREMIUM TOOLKIT
+    ══════════════════════════════════════════ */
+    .toolkit-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+    @media(max-width:700px){.toolkit-grid{grid-template-columns:repeat(3,1fr)}}
+    .toolkit-tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 10px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:center;user-select:none}
+    .toolkit-tile:hover{background:var(--card2);border-color:var(--border2);transform:translateY(-2px)}
+    .toolkit-tile:active{transform:translateY(0)}
+    .toolkit-tile.owner-tile{border-color:rgba(201,160,80,.1)}
+    .toolkit-tile.owner-tile:hover{border-color:rgba(201,160,80,.28)}
+    .toolkit-icon-box{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:var(--text3)}
+    .toolkit-label{font-family:var(--mono);font-size:.48rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);line-height:1.4}
+
+    /* ══════════════════════════════════════════
+       7. TRANSFORMATION
+    ══════════════════════════════════════════ */
+    .transform-inner{display:grid;grid-template-columns:420px 1fr;gap:48px;align-items:start}
+    @media(max-width:800px){.transform-inner{grid-template-columns:1fr}}
+    .transform-h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--text1);letter-spacing:-.04em;line-height:1.15;margin-bottom:16px}
+    .transform-h2 em{font-style:italic;color:var(--text4);font-weight:300}
+    .transform-desc{font-size:.92rem;color:var(--text3);line-height:1.68;margin-bottom:28px}
+    .transform-metrics{display:flex;flex-direction:column;gap:10px}
+    .transform-metric{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 16px;font-size:.84rem;color:var(--text2)}
+    .transform-metric svg{color:var(--blue);flex-shrink:0}
+    .transform-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .transform-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;transition:border-color .2s,transform .2s}
+    .transform-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+    .transform-card-icon{width:36px;height:36px;background:var(--blue-dim);border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--blue);margin-bottom:14px}
+    .transform-card-cat{font-family:var(--mono);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text4);margin-bottom:4px}
+    .transform-card-title{font-size:.88rem;font-weight:700;color:var(--text1);margin-bottom:6px;letter-spacing:-.01em}
+    .transform-card-desc{font-size:.76rem;color:var(--text3);line-height:1.55}
+
+    /* ══════════════════════════════════════════
+       8. CLOSING CARD
+    ══════════════════════════════════════════ */
+    .closing-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:52px 48px;display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:center;margin:72px 0}
+    @media(max-width:700px){.closing-card{grid-template-columns:1fr;padding:36px 28px}}
+    .closing-crown{font-size:2rem;margin-bottom:20px}
+    .closing-h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--text1);letter-spacing:-.03em;line-height:1.25;margin-bottom:14px}
+    .closing-h2 em{font-style:italic;color:var(--gold);font-family:Georgia,serif;font-weight:400}
+    .closing-desc{font-size:.85rem;color:var(--text3);line-height:1.65}
+    .closing-ring{width:200px;height:200px;border-radius:50%;border:1px solid var(--border2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;margin:0 auto;background:rgba(255,255,255,.02)}
+    .closing-ring-label{font-family:var(--mono);font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text4)}
+    .closing-ring-title{font-size:.95rem;font-weight:600;color:var(--text1);line-height:1.35;padding:0 20px}
+    .closing-ring-badge{font-family:var(--mono);font-size:.52rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:4px 10px;color:var(--text3)}
+
+    /* ══════════════════════════════════════════
+       9. FOOTER
+    ══════════════════════════════════════════ */
+    .doc-footer{border-top:1px solid var(--border);padding:32px 0;display:flex;align-items:center;justify-content:center;gap:10px}
+    .doc-footer-logo{display:flex;align-items:center;gap:8px}
+    .doc-footer-name{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.2em;color:var(--text3)}
+
+    /* ══════════════════════════════════════════
+       MODALS
+    ══════════════════════════════════════════ */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.open{display:flex}
+    .modal-box{background:#0D0E18;border:1px solid var(--border2);border-radius:20px;max-width:780px;width:100%;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;animation:modalIn .22s cubic-bezier(.16,1,.3,1)}
+    @keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .modal-head{padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .modal-title{font-size:1.05rem;font-weight:700;color:var(--text1)}
+    .modal-sub{font-size:.8rem;color:var(--text3);margin-top:3px}
+    .modal-close{background:rgba(255,255,255,.06);border:none;color:var(--text3);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+    .modal-close:hover{background:rgba(255,255,255,.12);color:var(--text1)}
+    .modal-body{overflow-y:auto;padding:22px 26px 26px}
+    .modal-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+    .modal-table{width:100%;border-collapse:collapse;font-size:.82rem}
+    .modal-table th{background:rgba(255,255,255,.04);color:var(--text3);font-weight:600;font-family:var(--mono);font-size:.66rem;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+    .modal-table td{padding:9px 14px;color:var(--text2);border-bottom:1px solid rgba(255,255,255,.04);min-width:80px}
+    .modal-table td[contenteditable]{outline:none;cursor:text;transition:background .15s}
+    .modal-table td[contenteditable]:hover{background:rgba(255,255,255,.03)}
+    .modal-table td[contenteditable]:focus{background:rgba(43,121,255,.07);box-shadow:inset 0 0 0 1px rgba(43,121,255,.3)}
+    .modal-table tr:last-child td{border-bottom:none}
+    .modal-table .empty-row td{color:var(--text4);font-style:italic}
+    .modal-hint{margin-top:16px;background:rgba(43,121,255,.05);border:1px solid rgba(43,121,255,.1);border-radius:10px;padding:14px 16px;font-size:.8rem;color:var(--text3);line-height:1.6}
+    .modal-footer{padding:14px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}
+    .modal-edit-hint{font-size:.74rem;color:var(--text4);display:flex;align-items:center;gap:6px}
+    .modal-dl-btn{display:flex;align-items:center;gap:7px;background:rgba(48,209,88,.08);border:1px solid rgba(48,209,88,.18);color:#4ADE80;font-size:.8rem;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+    .modal-dl-btn:hover{background:rgba(48,209,88,.15);border-color:rgba(48,209,88,.35)}
+
+    /* AXIS MODAL */
+    .axis-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+    .axis-modal-overlay.open{display:flex}
+    .axis-modal-box{background:#0D0E18;border:1px solid var(--border2);border-radius:20px;max-width:560px;width:100%;overflow:hidden;animation:modalIn .22s cubic-bezier(.16,1,.3,1)}
+    .axis-modal-head{padding:28px 28px 22px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+    .axis-modal-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .axis-modal-info{flex:1}
+    .axis-modal-name{font-size:1.2rem;font-weight:700;color:var(--text1);margin-bottom:2px}
+    .axis-modal-sub{font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text4)}
+    .axis-modal-body{padding:24px 28px 28px;display:flex;flex-direction:column;gap:18px}
+    .axis-modal-score-row{display:flex;align-items:center;gap:16px}
+    .axis-modal-score{font-size:3rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+    .axis-modal-score-bar{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+    .axis-modal-score-fill{height:100%;border-radius:2px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+    .axis-modal-insight-label{font-family:var(--mono);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text4);margin-bottom:6px}
+    .axis-modal-insight-text{font-size:.88rem;color:var(--text2);line-height:1.65}
+    .axis-modal-axis-info{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+    .axis-modal-axis-info p{font-size:.82rem;color:var(--text3);line-height:1.6}
+    .axis-modal-close-btn{width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:13px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s}
+    .axis-modal-close-btn:hover{background:#1a6aff}
 
     /* ── NO DATA ── */
-    .no-data-box {
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 48px 32px;
-      text-align: center;
-      max-width: 480px;
-      margin: 20vh auto 0;
-    }
-    .no-data-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text1);
-      margin-bottom: 10px;
-    }
-    .no-data-desc {
-      font-size: .88rem;
-      color: var(--text3);
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-    .btn-go {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--blue);
-      color: #fff;
-      font-size: .88rem;
-      font-weight: 600;
-      padding: 11px 22px;
-      border-radius: 9px;
-      text-decoration: none;
+    .no-data-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:56px 36px;text-align:center;max-width:480px;margin:20vh auto 0}
+    .no-data-title{font-size:1.1rem;font-weight:700;color:var(--text1);margin-bottom:10px}
+    .no-data-desc{font-size:.88rem;color:var(--text3);line-height:1.6;margin-bottom:28px}
+    .btn-go{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-size:.88rem;font-weight:600;padding:12px 24px;border-radius:10px;text-decoration:none}
+
+    /* ── PRINT ── */
+    @media print{
+      .print-bar,#loading-screen,#error-screen,.modal-overlay,.axis-modal-overlay{display:none!important}
+      #roadmap{display:block!important}
+      body{background:#fff!important;color:#111!important}
+      .hero{background:#fff!important;min-height:auto}
+      .hero-h1{color:#111!important;font-size:4rem!important}
+      .hero-h1 em{color:#1a5aff!important}
+      .score-card,.axis-card,.rz-container,.plan-row,.toolkit-tile,.closing-card,.transform-card{background:#f8f9fa!important;border-color:#e5e7eb!important}
+      :root{--bg:#fff;--card:#f8f9fa;--card2:#f1f3f5;--border:#e5e7eb;--text1:#111;--text2:#374151;--text3:#6B7280;--text4:#9CA3AF}
     }
   </style>
 </head>
@@ -1019,42 +344,27 @@
   <div class="loading-logo">K-A-Q-S™</div>
   <div class="loading-title">Генерируем ваш Roadmap</div>
   <div class="loading-steps">
-    <div class="loading-step" id="ls1">
-      <div class="step-dot"></div>
-      Загружаем результаты диагностики
-    </div>
-    <div class="loading-step" id="ls2">
-      <div class="step-dot"></div>
-      Анализируем слабые оси
-    </div>
-    <div class="loading-step" id="ls3">
-      <div class="step-dot"></div>
-      Формируем персональный план
-    </div>
-    <div class="loading-step" id="ls4">
-      <div class="step-dot"></div>
-      Подбираем шаблоны
-    </div>
+    <div class="loading-step" id="ls1"><div class="step-dot"></div>Загружаем результаты диагностики</div>
+    <div class="loading-step" id="ls2"><div class="step-dot"></div>Анализируем слабые оси</div>
+    <div class="loading-step" id="ls3"><div class="step-dot"></div>Формируем персональный план</div>
+    <div class="loading-step" id="ls4"><div class="step-dot"></div>Подбираем шаблоны</div>
   </div>
 </div>
 
 <!-- ERROR -->
 <div id="error-screen">
-  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--blue);margin-bottom:16px;">K-A-Q-S™</div>
-  <div style="font-size:1.1rem;font-weight:600;color:var(--text1);margin-bottom:8px;">Не удалось сгенерировать Roadmap</div>
-  <div id="error-msg" style="font-size:.85rem;color:var(--text3);max-width:360px;text-align:center;line-height:1.6;margin-bottom:24px;"></div>
-  <button onclick="retryGenerate()" style="background:var(--blue);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;">Попробовать снова</button>
-  <a href="mailto:miss.kuznetsov96@gmail.com" style="color:var(--text3);font-size:.8rem;margin-top:12px;">или напишите нам</a>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--blue);margin-bottom:16px">K-A-Q-S™</div>
+  <div style="font-size:1.1rem;font-weight:600;color:var(--text1);margin-bottom:8px">Не удалось сгенерировать Roadmap</div>
+  <div id="error-msg" style="font-size:.85rem;color:var(--text3);max-width:360px;line-height:1.6;margin-bottom:24px"></div>
+  <button onclick="retryGenerate()" style="background:var(--blue);color:#fff;border:none;padding:11px 24px;border-radius:9px;font-size:.88rem;font-weight:600;cursor:pointer">Попробовать снова</button>
+  <a href="mailto:miss.kuznetsov96@gmail.com" style="color:var(--text3);font-size:.8rem;margin-top:12px">или напишите нам</a>
 </div>
 
-<!-- MODAL -->
+<!-- TEMPLATE MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <div class="modal-head">
-      <div>
-        <div class="modal-title" id="modal-title"></div>
-        <div class="modal-sub" id="modal-sub"></div>
-      </div>
+      <div><div class="modal-title" id="modal-title"></div><div class="modal-sub" id="modal-sub"></div></div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
@@ -1074,13 +384,37 @@
   </div>
 </div>
 
+<!-- AXIS MODAL -->
+<div class="axis-modal-overlay" id="axis-modal-overlay" onclick="if(event.target===this)closeAxisModal()">
+  <div class="axis-modal-box">
+    <div class="axis-modal-head">
+      <div class="axis-modal-icon" id="am-icon-box"></div>
+      <div class="axis-modal-info">
+        <div class="axis-modal-name" id="am-name"></div>
+        <div class="axis-modal-sub" id="am-sub"></div>
+      </div>
+      <button class="modal-close" onclick="closeAxisModal()">✕</button>
+    </div>
+    <div class="axis-modal-body">
+      <div class="axis-modal-score-row">
+        <div class="axis-modal-score" id="am-score"></div>
+        <div class="axis-modal-score-bar"><div class="axis-modal-score-fill" id="am-fill"></div></div>
+      </div>
+      <div>
+        <div class="axis-modal-insight-label">Диагностика</div>
+        <div class="axis-modal-insight-text" id="am-insight"></div>
+      </div>
+      <div class="axis-modal-axis-info" id="am-info"></div>
+      <button class="axis-modal-close-btn" onclick="closeAxisModal()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
 <!-- PRINT BAR -->
 <div class="print-bar" id="print-bar">
   <div class="print-logo">K-A-Q-S™</div>
   <button class="print-btn" onclick="window.print()">
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-      <path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 11v3h8v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 6V2h8v4M4 11H2V7h12v4h-2M4 11v3h8v-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Сохранить PDF
   </button>
 </div>
@@ -1088,99 +422,231 @@
 <!-- DOCUMENT -->
 <div id="roadmap">
 
-  <!-- COVER -->
-  <div class="cover">
-    <div class="cover-bar">
-      <div class="cover-bar-logo">K-A-Q-S™</div>
-      <div class="cover-bar-right">
-        <span class="cover-bar-tag">Executive Business Report</span>
-        <span class="cover-bar-date" id="cv-date">—</span>
+  <!-- 1. HERO -->
+  <div class="hero">
+    <nav class="hero-nav">
+      <div class="hero-nav-logo">
+        <div class="logo-k">K</div>
+        <span class="logo-name">K-A-Q-S™</span>
+      </div>
+      <div class="hero-nav-right">
+        <span class="nav-pill">OWNER LEVEL</span>
+        <span class="nav-tag">DOCS/2025</span>
+      </div>
+    </nav>
+    <div class="hero-body">
+      <div class="hero-badge">Executive Architecture Report</div>
+      <h1 class="hero-h1">Архитектура<br><em>управляемого</em><br>бизнеса</h1>
+      <p class="hero-sub">Где бизнес теряет ресурсы, что мешает масштабированию и как высвободить <strong>20+ часов еженедельно</strong> в ближайшие 90 дней.</p>
+    </div>
+    <div class="hero-foot">
+      <div class="hero-foot-item">
+        <span class="hero-foot-label">Собственник</span>
+        <span class="hero-foot-val" id="cv-name">—</span>
+      </div>
+      <div class="hero-foot-item">
+        <span class="hero-foot-label">Профиль</span>
+        <span class="hero-foot-val" id="cv-profile">—</span>
+      </div>
+      <div class="hero-foot-item">
+        <span class="hero-foot-label">Дата</span>
+        <span class="hero-foot-val" id="cv-date">—</span>
+      </div>
+      <div class="hero-foot-item">
+        <span class="hero-foot-label">Период</span>
+        <span class="hero-foot-val">90 дней</span>
       </div>
     </div>
-    <div class="cover-main">
-      <div class="cover-left">
-        <div class="score-eyebrow">Readiness Index</div>
-        <div class="score-num-row">
-          <span class="score-big" id="cv-index">—</span>
-          <span class="score-denom-big">/100</span>
-        </div>
-        <div class="score-bar-track">
-          <div class="score-bar-fill" id="score-bar-fill"></div>
-        </div>
-        <div class="zone-badge" id="cv-status">
-          <span class="zone-dot" id="cv-zone-dot"></span>
-          <span id="cv-status-text">—</span>
-        </div>
-        <div class="cover-owner-line">Подготовлено для: <strong id="cv-name">—</strong></div>
-      </div>
-      <div class="cover-right">
-        <div class="cover-report-tag">Executive Business Architecture Report</div>
-        <h1 class="cover-headline">Архитектура<br>управляемого бизнеса</h1>
-        <div class="cover-accent-line"></div>
-        <p class="cover-subline">Где бизнес теряет деньги, что мешает масштабироваться и что конкретно делать в ближайшие 90 дней.</p>
-        <div class="cover-meta">
-          <div class="cover-meta-item">
-            <div class="cover-meta-label">Собственник</div>
-            <div class="cover-meta-val" id="cv-name2">—</div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- 2. SCORE CARD -->
+    <div class="score-section">
+      <div class="score-card">
+        <div class="score-gauge-side">
+          <div class="gauge-eyebrow">Business Health Index</div>
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="gGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#1A5AE6"/>
+                  <stop offset="100%" stop-color="#5BB0FF"/>
+                </linearGradient>
+              </defs>
+              <circle class="gauge-track" cx="100" cy="100" r="82"/>
+              <circle class="gauge-fill" cx="100" cy="100" r="82" id="gauge-arc"/>
+            </svg>
+            <div class="gauge-overlay">
+              <div class="gauge-num" id="cv-index">—</div>
+              <div class="gauge-num-sub">Status Score</div>
+            </div>
           </div>
-          <div class="cover-meta-item">
-            <div class="cover-meta-label">Профиль</div>
-            <div class="cover-meta-val" id="cv-profile">—</div>
-          </div>
-          <div class="cover-meta-item">
-            <div class="cover-meta-label">Период</div>
-            <div class="cover-meta-val">90 дней</div>
+        </div>
+        <div class="score-info-side">
+          <div class="zone-badge" id="cv-status"><span class="zone-dot" id="cv-zone-dot"></span><span id="cv-status-text">—</span></div>
+          <div class="score-verdict" id="cv-verdict">—</div>
+          <div class="score-summary" id="cv-summary">—</div>
+          <div class="score-metrics">
+            <div class="score-metric">
+              <div class="score-metric-icon blue">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+              </div>
+              <span>Потенциал роста: <strong id="cv-potential">—</strong></span>
+            </div>
+            <div class="score-metric">
+              <div class="score-metric-icon gold">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <span>Экономия времени: <strong id="cv-timesave">—</strong></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 01 ДИАГНОСТИКА -->
-  <div class="section">
-    <div class="section-eyebrow">Системный аудит</div>
-    <div class="section-title">Диагностический профиль</div>
-    <div class="axis-grid" id="axis-grid"></div>
-    <div class="profile-card" id="profile-card">
-      <div class="profile-left">
-        <div class="profile-label">Профиль</div>
-        <div class="profile-name" id="profile-name">—</div>
+    <!-- 3. DIAGNOSTIC PROFILE -->
+    <div class="section">
+      <div class="section-eyebrow">Системный аудит</div>
+      <div class="section-h2">Диагностический профиль</div>
+      <div class="axis-grid" id="axis-grid"></div>
+    </div>
+
+    <!-- 4. RED ZONES -->
+    <div class="section">
+      <div class="section-eyebrow">Критические уязвимости</div>
+      <div class="section-h2">Красные зоны бизнеса</div>
+      <div class="rz-container">
+        <div class="rz-inner">
+          <div class="rz-left">
+            <div class="rz-leakage-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Leakage Detected
+            </div>
+            <h3 class="rz-question">Где вы теряете ресурсы?</h3>
+            <div class="rz-list" id="red-zones"></div>
+            <div class="rz-ghost-icon">
+              <svg width="80" height="80" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="1"/><line x1="12" y1="8" x2="12" y2="12" stroke="white" stroke-width="1"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="white" stroke-width="1"/></svg>
+            </div>
+          </div>
+          <div class="rz-right">
+            <div class="rz-urgency">
+              <div class="rz-urgency-ghost">01</div>
+              <div class="rz-urgency-title">Точка невозврата</div>
+              <div class="rz-urgency-text" id="rz-point1">Если не внедрить систему в ближайшие 90 дней, масштаб компании приведёт к энтропии управления. Хаос вырастет быстрее, чем выручка.</div>
+            </div>
+            <div class="rz-urgency">
+              <div class="rz-urgency-ghost">02</div>
+              <div class="rz-urgency-title">Упущенная выгода</div>
+              <div class="rz-urgency-text">Стоимость отсутствия системы нарастает каждый месяц в виде <strong>неэффективного использования времени команды</strong> и потерь в конверсии.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="profile-summary" id="profile-summary">—</div>
     </div>
-  </div>
 
-  <!-- 02 КРАСНЫЕ ЗОНЫ -->
-  <div class="section">
-    <div class="section-eyebrow">Критические уязвимости</div>
-    <div class="section-title">Красные зоны бизнеса</div>
-    <div class="red-zones" id="red-zones"></div>
-  </div>
-
-  <!-- 03 ПЛАН -->
-  <div class="section">
-    <div class="section-eyebrow">Executive Strategy Map</div>
-    <div class="section-head-row">
-      <div class="section-title">Roadmap на 90 дней</div>
-      <div class="month-tabs" id="month-tabs"></div>
+    <!-- 5. ROADMAP -->
+    <div class="section">
+      <div class="section-eyebrow">Executive Strategy Map</div>
+      <div class="section-head-row">
+        <div class="section-h2">Roadmap на 90 дней</div>
+        <div class="month-tabs" id="month-tabs"></div>
+      </div>
+      <div id="plan-container"></div>
     </div>
-    <div id="plan-container"></div>
-  </div>
 
-  <!-- 04 ИНСТРУМЕНТЫ -->
-  <div class="section">
-    <div class="section-eyebrow">Системный арсенал</div>
-    <div class="section-title">Инструменты и шаблоны</div>
-    <div class="toolkit-grid" id="templates-grid"></div>
-  </div>
+    <!-- 6. TOOLKIT -->
+    <div class="section">
+      <div class="section-eyebrow">Системный арсенал</div>
+      <div class="section-h2">Premium Toolkit</div>
+      <div class="toolkit-grid" id="templates-grid"></div>
+    </div>
 
-  <!-- FOOTER -->
-  <div class="doc-footer">
-    <div class="doc-footer-logo">K-A-Q-S™</div>
-    <div class="doc-footer-note">Документ сгенерирован персонально · Не подлежит передаче третьим лицам</div>
-  </div>
+    <!-- 7. TRANSFORMATION -->
+    <div class="section">
+      <div class="section-eyebrow">Executive Transformation</div>
+      <div class="transform-inner">
+        <div class="transform-left">
+          <h2 class="transform-h2">Новая архитектура <em>вашего бизнеса</em></h2>
+          <p class="transform-desc">Результат внедрения 90-дневной стратегии — переход от операционного хаоса к управляемой архитектуре роста.</p>
+          <div class="transform-metrics">
+            <div class="transform-metric">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Финансовая устойчивость: <strong id="fin-metric">—</strong>
+            </div>
+            <div class="transform-metric">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Бизнес готов к масштабированию
+            </div>
+          </div>
+        </div>
+        <div class="transform-grid">
+          <div class="transform-card">
+            <div class="transform-card-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div class="transform-card-cat">Контроль</div>
+            <div class="transform-card-title">Без микроменеджмента</div>
+            <div class="transform-card-desc">Управление через дашборды и KPI в реальном времени</div>
+          </div>
+          <div class="transform-card">
+            <div class="transform-card-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div class="transform-card-cat">Финансы</div>
+            <div class="transform-card-title">Предсказуемость</div>
+            <div class="transform-card-desc">Прозрачный P&amp;L и CashFlow без кассовых разрывов</div>
+          </div>
+          <div class="transform-card">
+            <div class="transform-card-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div class="transform-card-cat">Тайм-менеджмент</div>
+            <div class="transform-card-title">Выход из операционки</div>
+            <div class="transform-card-desc">Высвобождение 15-20 часов в неделю для стратегии</div>
+          </div>
+          <div class="transform-card">
+            <div class="transform-card-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+            <div class="transform-card-cat">Масштабирование</div>
+            <div class="transform-card-title">Без хаоса</div>
+            <div class="transform-card-desc">Рост выручки x2 при сохранении текущего уровня контроля</div>
+          </div>
+          <div class="transform-card">
+            <div class="transform-card-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="transform-card-cat">Команда</div>
+            <div class="transform-card-title">Автономность</div>
+            <div class="transform-card-desc">Команда работает без критической зависимости от владельца</div>
+          </div>
+          <div class="transform-card">
+            <div class="transform-card-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
+            <div class="transform-card-cat">Управление</div>
+            <div class="transform-card-title">Вместо ручного контроля</div>
+            <div class="transform-card-desc">Система управления как фундамент стабильного развития</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <!-- 8. CLOSING -->
+    <div class="closing-card">
+      <div>
+        <div class="closing-crown">♛</div>
+        <h2 class="closing-h2">Система готова.<br>Теперь вопрос только в скорости <em>внедрения.</em></h2>
+        <p class="closing-desc">Бизнес готов к росту без перегрузки собственника. Следующий этап: Фундамент → Контроль → Масштабирование.</p>
+      </div>
+      <div>
+        <div class="closing-ring">
+          <div class="closing-ring-label">Статус</div>
+          <div class="closing-ring-title">Архитектура сформирована</div>
+          <div class="closing-ring-badge" id="closing-owner">Собственник</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. FOOTER -->
+    <div class="doc-footer">
+      <div class="doc-footer-logo">
+        <div class="logo-k">K</div>
+        <span class="doc-footer-name">K-A-Q-S™ ARCHITECTURE</span>
+      </div>
+    </div>
+
+  </div><!-- /wrap -->
+</div><!-- /roadmap -->
 
 <script>
 const TEMPLATE_CATALOG = {
@@ -1193,92 +659,98 @@ const TEMPLATE_CATALOG = {
     full: [['Шаг','Действие','Кто выполняет','Срок','Результат','Если проблема'],['1','Принять заявку от клиента','Менеджер','5 мин','Заявка зарегистрирована','Перезвонить в течение часа'],['2','Проверить данные и наличие','Менеджер','10 мин','Подтверждение наличия','Сообщить клиенту об ожидании'],['3','Выставить счёт','Бухгалтер','15 мин','Счёт отправлен','Проверить реквизиты'],['4','Подтвердить оплату','Бухгалтер','До 24ч','Оплата получена','Напомнить клиенту'],['5','Передать в работу','Владелец','Сразу','Задача в трекере','Уточнить приоритет'],['← Добавьте шаги вашего процесса','','','','','']],
     hint: 'Опишите один конкретный процесс. Начните с самого проблемного — где чаще всего возникают ошибки или вопросы к вам.' },
   K_metrics: { name: 'Карта метрик', axis: 'K', desc: 'Таблица метрик по каждому направлению с нормой и фактом',
-    preview: [['Метрика','Направление','Норма','Факт'],['Выручка','Продажи','300 000','280 000'],['Конверсия','Продажи','15%','12%']],
-    full: [['Метрика','Направление','Ответственный','Норма (цель)','Факт','Статус','Источник данных'],['Выручка за месяц','Финансы','Владелец','300 000 ₽','280 000 ₽','🔴 Ниже','1С / таблица'],['Конверсия заявок','Продажи','Менеджер','15%','12%','🔴 Ниже','CRM'],['Время ответа','Сервис','Менеджер','< 2 часов','3.5 часа','🔴 Ниже','Мессенджер'],['Кол-во новых клиентов','Маркетинг','Владелец','20','18','🟡 Близко','CRM'],['Повторные покупки','Продажи','Менеджер','40%','45%','🟢 OK','CRM'],['← Ваша метрика','','','','','','']],
-    hint: 'Выберите 5-8 метрик, которые реально отражают здоровье бизнеса. Смотрите их еженедельно. Начните с выручки, конверсии и времени ответа клиенту.' },
+    preview: [['Метрика','Норма','Факт'],['Выручка','300 000','280 000'],['Конверсия','15%','12%']],
+    full: [['Метрика','Направление','Ответственный','Норма (цель)','Факт','Статус','Источник данных'],['Выручка за месяц','Финансы','Владелец','300 000 ₽','280 000 ₽','🔴 Ниже','1С / таблица'],['Конверсия заявок','Продажи','Менеджер','15%','12%','🔴 Ниже','CRM'],['Время ответа','Сервис','Менеджер','< 2 часов','3.5 часа','🔴 Ниже','Мессенджер'],['Новые клиенты','Маркетинг','Владелец','20','18','🟡 Близко','CRM'],['Повторные покупки','Продажи','Менеджер','40%','45%','🟢 OK','CRM'],['← Ваша метрика','','','','','','']],
+    hint: 'Выберите 5-8 метрик, которые реально отражают здоровье бизнеса. Смотрите их еженедельно.' },
   K_onboard: { name: 'Онбординг-план', axis: 'K', desc: 'Чеклист введения нового сотрудника за 30 дней',
     preview: [['День','Задача','Ответственный','✓'],['1','Знакомство с командой','Владелец','☐'],['1','Доступы к системам','Владелец','☐']],
     full: [['День','Задача','Кто проводит','Результат','Выполнено'],['1','Встреча-знакомство с командой','Владелец','Новый знает всех','☐'],['1','Выдать доступы: почта, CRM, трекер','Владелец','Все доступы получены','☐'],['1-2','Изучить продукт / услугу','Сам сотрудник','Знает что продаём','☐'],['3-5','Изучить процессы и SOP','Руководитель','Понимает как работать','☐'],['1 неделя','Первая реальная задача под контролем','Руководитель','Задача выполнена','☐'],['2 неделя','Самостоятельная работа с обратной связью','Руководитель','Работает сам','☐'],['30 дней','Ревью: вопросы, проблемы, план','Владелец','Адаптация завершена','☐']],
     hint: 'Заполните этот чеклист под каждую роль в компании. Хороший онбординг сокращает время до результата с 3 месяцев до 3-4 недель.' },
   A_audit: { name: 'Аудит рутины', axis: 'A', desc: 'Таблица повторяющихся задач с потенциалом автоматизации',
-    preview: [['Задача','Кто','Мин/день','Автоматизировать?'],['Ответы в чате','Менеджер','60','Да — бот'],['Выставление счетов','Бухгалтер','45','Да — 1С']],
-    full: [['Повторяющаяся задача','Кто делает','Мин/день','Мин/неделю','Автоматизировать?','Инструмент','Приоритет'],['Ответы на типовые вопросы','Менеджер','60','300','✅ Да','Чат-бот / шаблоны','🔴 Высокий'],['Выставление счетов','Бухгалтер','45','225','✅ Да','1С / Мой Склад','🔴 Высокий'],['Напоминания клиентам','Менеджер','30','150','✅ Да','CRM / WhatsApp бот','🔴 Высокий'],['Подготовка отчётов','Владелец','90','90','🟡 Частично','Google Sheets','🟡 Средний'],['Согласование задач','Владелец','60','300','🟡 Частично','Трекер задач','🟡 Средний'],['Публикации в соцсети','Маркетолог','30','150','✅ Да','SMMplanner','🟢 Низкий'],['← Ваша задача','','','','','','']],
-    hint: 'Пройдитесь по всем задачам, которые повторяются каждую неделю. Всё что занимает >2 часов в неделю и не требует принятия решений — кандидат на автоматизацию.' },
+    preview: [['Задача','Кто','Мин/день','Автоматизировать?'],['Ответы в чате','Менеджер','60','Да — бот'],['Счета','Бухгалтер','45','Да — 1С']],
+    full: [['Повторяющаяся задача','Кто делает','Мин/день','Мин/неделю','Автоматизировать?','Инструмент','Приоритет'],['Ответы на типовые вопросы','Менеджер','60','300','✅ Да','Чат-бот / шаблоны','🔴 Высокий'],['Выставление счетов','Бухгалтер','45','225','✅ Да','1С / Мой Склад','🔴 Высокий'],['Напоминания клиентам','Менеджер','30','150','✅ Да','CRM / WhatsApp бот','🔴 Высокий'],['Подготовка отчётов','Владелец','90','90','🟡 Частично','Google Sheets','🟡 Средний'],['Согласование задач','Владелец','60','300','🟡 Частично','Трекер задач','🟡 Средний'],['← Ваша задача','','','','','','']],
+    hint: 'Всё что занимает >2 часов в неделю и не требует принятия решений — кандидат на автоматизацию.' },
   A_roi: { name: 'ROI-калькулятор', axis: 'A', desc: 'Расчёт окупаемости внедрения инструмента или найма',
     preview: [['Параметр','Значение'],['Стоимость инструмента','5 000 ₽/мес'],['Время сэкономлено','20 ч/мес']],
     full: [['Параметр','Значение','Комментарий'],['Стоимость внедрения (разово)','','Настройка, обучение'],['Стоимость подписки/мес','','Ежемесячный платёж'],['Итого затраты за год','=','Авторасчёт'],['','',''],['Время сэкономлено в месяц (часов)','','Сколько часов освободится'],['Стоимость 1 часа сотрудника (₽)','','Зарплата ÷ рабочие часы'],['Экономия в месяц (₽)','=','Авторасчёт'],['Экономия в год (₽)','=','Авторасчёт'],['','',''],['ROI за год (%)','=','(Экономия - Затраты) ÷ Затраты × 100'],['Срок окупаемости (мес)','=','Затраты ÷ Экономия в мес']],
-    hint: 'Используйте этот расчёт перед внедрением любого нового инструмента или наймом сотрудника. Если ROI меньше 100% за год — стоит подумать дважды.' },
+    hint: 'Если ROI меньше 100% за год — стоит подумать дважды.' },
   A_tools: { name: 'Карта AI-инструментов', axis: 'A', desc: 'Таблица всех инструментов с задачами и стоимостью',
-    preview: [['Инструмент','Задача','Стоимость','Статус'],['ChatGPT','Тексты, письма','Бесплатно','✅ Активен'],['Notion AI','База знаний','1 200/мес','✅ Активен']],
+    preview: [['Инструмент','Задача','Стоимость','Статус'],['ChatGPT','Тексты','Бесплатно','✅'],['Notion AI','База знаний','1 200/мес','✅']],
     full: [['Инструмент / Сервис','Задача','Кто использует','Стоимость/мес','Статус','Оценка пользы'],['ChatGPT / Claude','Тексты, анализ, письма','Все','0 - 2 000 ₽','✅ Активен','⭐⭐⭐⭐⭐'],['Notion / Confluence','База знаний, документы','Вся команда','0 - 1 500 ₽','✅ Активен','⭐⭐⭐⭐'],['CRM (AmoCRM / Битрикс)','Управление клиентами','Менеджер','2 000 - 5 000 ₽','🟡 Внедряется','⭐⭐⭐'],['SMMplanner / Later','Соцсети','Маркетолог','500 - 1 500 ₽','✅ Активен','⭐⭐⭐'],['Zapier / Make','Интеграции','Владелец','0 - 3 000 ₽','❌ Не используем',''],['← Ваш инструмент','','','','','']],
-    hint: 'Составьте полный список всех инструментов. Регулярно пересматривайте: отключайте то, что не используется. Каждые 500-1000 ₽/мес "просто так" — это потери.' },
+    hint: 'Регулярно пересматривайте: отключайте то, что не используется.' },
   A_checklist: { name: 'AI-ready чек-лист', axis: 'A', desc: 'Критерии готовности процесса к автоматизации',
     preview: [['Критерий','Статус'],['Процесс описан в SOP','❌ Нет'],['Повторяется >3 раз/нед','✅ Да']],
     full: [['Критерий готовности к автоматизации','Статус','Комментарий'],['Процесс чётко описан (есть SOP)','☐ Да / Нет','Без описания автоматизация не работает'],['Повторяется минимум 3 раза в неделю','☐ Да / Нет','Редкие задачи не стоит автоматизировать'],['Не требует творческих решений','☐ Да / Нет','Если нужна экспертиза — только частичная автоматизация'],['Чёткий входящий сигнал (триггер)','☐ Да / Нет','Что запускает процесс?'],['Чёткий результат (что на выходе)','☐ Да / Нет','Что должно получиться?'],['Данные в цифровом виде','☐ Да / Нет','Бумага и звонки — плохо для автоматизации'],['Команда готова к изменениям','☐ Да / Нет','Сопротивление убивает внедрение'],['','',''],['Итого "Да":','/ 7','Если 5+ — автоматизируйте']],
-    hint: 'Прогоните каждый кандидат на автоматизацию через этот чеклист. Меньше 5 "Да" — сначала исправьте процесс, потом автоматизируйте.' },
+    hint: 'Меньше 5 "Да" — сначала исправьте процесс, потом автоматизируйте.' },
   Q_kpi: { name: 'KPI Dashboard', axis: 'Q', desc: 'Дашборд ключевых показателей с целевыми значениями',
     preview: [['Метрика','Цель','Факт','🚦'],['Выручка','300 000','280 000','🔴'],['Новые клиенты','20','23','🟢']],
     full: [['Метрика','Ответственный','Цель','Факт (этот мес)','Факт (пред. мес)','🚦','Действие'],['Выручка','Владелец','300 000 ₽','','','',''],['Прибыль','Владелец','80 000 ₽','','','',''],['Новые клиенты','Менеджер','20','','','',''],['Повторные клиенты','Менеджер','40%','','','',''],['Конверсия заявок','Менеджер','15%','','','',''],['Время ответа','Менеджер','< 2 ч','','','',''],['Кол-во ошибок/рекламаций','Команда','< 3','','','',''],['NPS / удовлетворённость','Владелец','> 8/10','','','','']],
-    hint: '🟢 = выполнено или выше цели, 🟡 = в пределах 10% от цели, 🔴 = не выполнено. Смотрите еженедельно, обсуждайте с командой ежемесячно.' },
+    hint: '🟢 = выполнено, 🟡 = в пределах 10% от цели, 🔴 = не выполнено.' },
   Q_risks: { name: 'Реестр рисков', axis: 'Q', desc: 'Таблица бизнес-рисков с вероятностью и планом снижения',
-    preview: [['Риск','Вероятность','Влияние','Статус'],['Уход ключевого клиента','Высокая','Критично','🔴'],['Сбой поставщика','Средняя','Высокое','🟡']],
-    full: [['Риск','Вероятность','Влияние на бизнес','Приоритет','План митигации','Ответственный','Статус'],['Уход ключевого клиента (>30% выручки)','Высокая','Критично','🔴','Диверсифицировать клиентскую базу','Владелец','Активен'],['Болезнь/уход ключевого сотрудника','Средняя','Высокое','🔴','Описать процессы, обучить дублёра','Владелец','Активен'],['Сбой основного поставщика','Средняя','Высокое','🟡','Найти 1-2 запасных поставщика','Владелец','В работе'],['Кассовый разрыв','Средняя','Высокое','🟡','Создать резервный фонд на 1 мес','Владелец','В работе'],['Технический сбой (сайт/CRM)','Низкая','Среднее','🟢','Резервное копирование, план Б','Сотрудник','Решён'],['← Ваш риск','','','','','','']],
-    hint: 'Обновляйте реестр ежеквартально. Новые риски добавляйте сразу как появляются. Цель — не устранить все риски, а знать о них и иметь план.' },
+    preview: [['Риск','Вероятность','Влияние','Статус'],['Уход ключевого клиента','Высокая','Критично','🔴']],
+    full: [['Риск','Вероятность','Влияние на бизнес','Приоритет','План митигации','Ответственный','Статус'],['Уход ключевого клиента (>30% выручки)','Высокая','Критично','🔴','Диверсифицировать клиентскую базу','Владелец','Активен'],['Болезнь/уход ключевого сотрудника','Средняя','Высокое','🔴','Описать процессы, обучить дублёра','Владелец','Активен'],['Сбой основного поставщика','Средняя','Высокое','🟡','Найти 1-2 запасных поставщика','Владелец','В работе'],['Кассовый разрыв','Средняя','Высокое','🟡','Создать резервный фонд на 1 мес','Владелец','В работе'],['← Ваш риск','','','','','','']],
+    hint: 'Обновляйте реестр ежеквартально. Цель — не устранить все риски, а знать о них и иметь план.' },
   Q_errors: { name: 'Разбор ошибок', axis: 'Q', desc: 'Анализ инцидентов по системе 5 Why',
     preview: [['Поле','Значение'],['Что случилось','Клиент не получил заказ'],['Почему (1)','Курьер не приехал']],
-    full: [['Поле','Заполните'],['Дата инцидента',''],['Описание: что случилось?',''],['Кто пострадал (клиент/команда/бизнес)?',''],['Финансовые потери (если есть)',''],['',''],['АНАЛИЗ 5 WHY:',''],['Почему это произошло? (1)',''],['Почему это произошло? (2)',''],['Почему это произошло? (3)',''],['Почему это произошло? (4)',''],['Почему это произошло? (5) — Корневая причина',''],['',''],['ПЛАН ДЕЙСТВИЙ:',''],['Что делаем немедленно?',''],['Что меняем в процессе чтобы не повторилось?',''],['Кто ответственный за изменение?',''],['Срок внедрения',''],['Как проверим что исправлено?','']],
-    hint: 'Заполняйте этот шаблон на каждую ошибку которая стоила денег, клиента или репутации. 5 "Почему" помогают найти настоящую причину, а не симптом.' },
+    full: [['Поле','Заполните'],['Дата инцидента',''],['Описание: что случилось?',''],['Кто пострадал?',''],['Финансовые потери',''],['',''],['АНАЛИЗ 5 WHY:',''],['Почему (1)',''],['Почему (2)',''],['Почему (3)',''],['Почему (4)',''],['Почему (5) — Корневая причина',''],['',''],['ПЛАН ДЕЙСТВИЙ:',''],['Что делаем немедленно?',''],['Что меняем в процессе?',''],['Ответственный',''],['Срок внедрения',''],['Как проверим?','']],
+    hint: '5 "Почему" помогают найти настоящую причину, а не симптом.' },
   Q_checkpoints: { name: 'Контрольные точки', axis: 'Q', desc: 'Чеклист еженедельных и ежемесячных точек контроля',
     preview: [['Действие','Частота','Выполнено'],['Проверить KPI','Еженедельно','☐'],['Ревью задач команды','Еженедельно','☐']],
-    full: [['Контрольная точка','Частота','Ответственный','Выполнено'],['📊 Проверить KPI Dashboard','Еженедельно (пн)','Владелец','☐'],['✅ Ревью открытых задач команды','Еженедельно (пн)','Владелец','☐'],['💬 1-на-1 с ключевыми сотрудниками','Еженедельно','Владелец','☐'],['💰 Проверить движение денег (Cash Flow)','Еженедельно (пт)','Бухгалтер','☐'],['📥 Обратная связь от клиентов','Еженедельно','Менеджер','☐'],['','','',''],['📈 Закрытие месяца: финансовый отчёт','Ежемесячно','Бухгалтер','☐'],['🎯 Ревью целей месяца (выполнено/нет)','Ежемесячно','Владелец','☐'],['⚠️ Обновить реестр рисков','Ежемесячно','Владелец','☐'],['👥 Оценка команды и планы развития','Ежемесячно','Владелец','☐'],['🔄 Ревью процессов: что улучшить?','Ежеквартально','Владелец','☐']],
-    hint: 'Заблокируйте время в календаре под каждую точку. Еженедельный ревью занимает 30-45 минут, но спасает от сюрпризов и даёт контроль.' },
+    full: [['Контрольная точка','Частота','Ответственный','Выполнено'],['📊 Проверить KPI Dashboard','Еженедельно (пн)','Владелец','☐'],['✅ Ревью открытых задач команды','Еженедельно (пн)','Владелец','☐'],['💬 1-на-1 с ключевыми сотрудниками','Еженедельно','Владелец','☐'],['💰 Проверить движение денег','Еженедельно (пт)','Бухгалтер','☐'],['📥 Обратная связь от клиентов','Еженедельно','Менеджер','☐'],['','','',''],['📈 Закрытие месяца: финансовый отчёт','Ежемесячно','Бухгалтер','☐'],['🎯 Ревью целей месяца','Ежемесячно','Владелец','☐'],['⚠️ Обновить реестр рисков','Ежемесячно','Владелец','☐'],['👥 Оценка команды и планы развития','Ежемесячно','Владелец','☐']],
+    hint: 'Заблокируйте время в календаре под каждую точку. Еженедельный ревью занимает 30-45 минут.' },
   S_pl: { name: 'P&L шаблон', axis: 'S', desc: 'Отчёт о прибылях и убытках для малого бизнеса',
     preview: [['Статья','Январь','Февраль'],['Выручка','280 000','310 000'],['Прибыль','55 000','72 000']],
-    full: [['Статья','Янв','Фев','Мар','Апр','Май','Июн','Итого'],['ДОХОДЫ','','','','','','',''],['Основная выручка','','','','','','',''],['Дополнительные доходы','','','','','','',''],['Итого доходы','=','=','=','=','=','=','='],['','','','','','','',''],['РАСХОДЫ','','','','','','',''],['Себестоимость (товар/услуга)','','','','','','',''],['Зарплата команды','','','','','','',''],['Аренда / коммуналка','','','','','','',''],['Реклама и маркетинг','','','','','','',''],['Подписки и сервисы','','','','','','',''],['Прочие расходы','','','','','','',''],['Итого расходы','=','=','=','=','=','=','='],['','','','','','','',''],['ПРИБЫЛЬ','=','=','=','=','=','=','='],['Маржинальность (%)','=','=','=','=','=','=','=']],
-    hint: 'Заполняйте в начале каждого месяца по факту предыдущего. Маржинальность меньше 20% — сигнал пересмотреть расходы или поднять цены.' },
+    full: [['Статья','Янв','Фев','Мар','Апр','Май','Июн','Итого'],['ДОХОДЫ','','','','','','',''],['Основная выручка','','','','','','',''],['Дополнительные доходы','','','','','','',''],['Итого доходы','=','=','=','=','=','=','='],['','','','','','','',''],['РАСХОДЫ','','','','','','',''],['Себестоимость','','','','','','',''],['Зарплата команды','','','','','','',''],['Аренда / коммуналка','','','','','','',''],['Реклама и маркетинг','','','','','','',''],['Подписки и сервисы','','','','','','',''],['Прочие расходы','','','','','','',''],['Итого расходы','=','=','=','=','=','=','='],['','','','','','','',''],['ПРИБЫЛЬ','=','=','=','=','=','=','='],['Маржинальность (%)','=','=','=','=','=','=','=']],
+    hint: 'Маржинальность меньше 20% — сигнал пересмотреть расходы или поднять цены.' },
   S_cashflow: { name: 'Cash Flow light', axis: 'S', desc: 'Еженедельный трекер движения денег с прогнозом',
     preview: [['Неделя','Поступления','Расходы','Баланс'],['1 апр','150 000','90 000','+60 000'],['8 апр','80 000','120 000','-40 000']],
-    full: [['Неделя','Поступления (план)','Поступления (факт)','Расходы (план)','Расходы (факт)','Баланс','Комментарий'],['Неделя 1','','','','','=',''],['Неделя 2','','','','','=',''],['Неделя 3','','','','','=',''],['Неделя 4','','','','','=',''],['Итого месяц','=','=','=','=','=',''],['','','','','','',''],['Остаток на начало месяца','','','','','',''],['Остаток на конец месяца','=','','','','',''],['Минимальный остаток (буфер)','','','','','','Рекомендуется: 1-2 месяца расходов'],['Кассовый разрыв?','','','','','','Если баланс < минимума — кризис']],
-    hint: 'Заполняйте каждую пятницу. Если видите что баланс уйдёт в минус через 2 недели — у вас ещё есть время принять меры. Это и есть смысл трекера.' },
+    full: [['Неделя','Поступления (план)','Поступления (факт)','Расходы (план)','Расходы (факт)','Баланс','Комментарий'],['Неделя 1','','','','','=',''],['Неделя 2','','','','','=',''],['Неделя 3','','','','','=',''],['Неделя 4','','','','','=',''],['Итого месяц','=','=','=','=','=',''],['','','','','','',''],['Остаток на начало месяца','','','','','',''],['Остаток на конец месяца','=','','','','',''],['Минимальный остаток (буфер)','','','','','','Рекомендуется: 1-2 месяца расходов']],
+    hint: 'Если видите что баланс уйдёт в минус через 2 недели — у вас ещё есть время принять меры.' },
   S_raci: { name: 'RACI матрица', axis: 'S', desc: 'Таблица ответственности по ключевым процессам',
     preview: [['Процесс','Владелец','Менеджер','Бухгалтер'],['Стратегия','R','I','I'],['Закупки','A','R','C']],
-    full: [['Процесс / Решение','Владелец','Менеджер','Бухгалтер','Специалист','Примечание'],['Стратегическое планирование','R','I','I','I',''],['Найм и увольнение','R','C','I','I',''],['Ценообразование','R','C','C','I',''],['Работа с клиентами','A','R','I','C',''],['Закупки и поставщики','A','R','C','I',''],['Финансовая отчётность','C','I','R','I',''],['Маркетинг и реклама','A','C','I','R',''],['Контроль качества','A','R','I','C',''],['IT и инструменты','R','C','I','A','']],
-    hint: 'R = Выполняет, A = Отвечает за результат, C = Консультирует, I = Информируется. Каждый процесс должен иметь ровно одного R и одного A.' },
+    full: [['Процесс / Решение','Владелец','Менеджер','Бухгалтер','Специалист','Примечание'],['Стратегическое планирование','R','I','I','I',''],['Найм и увольнение','R','C','I','I',''],['Ценообразование','R','C','C','I',''],['Работа с клиентами','A','R','I','C',''],['Закупки и поставщики','A','R','C','I',''],['Финансовая отчётность','C','I','R','I',''],['Маркетинг и реклама','A','C','I','R',''],['← Ваш процесс','','','','','']],
+    hint: 'R = Выполняет, A = Отвечает, C = Консультирует, I = Информируется.' },
   S_hire: { name: 'План найма', axis: 'S', desc: 'Шаблон описания роли и воронки подбора',
     preview: [['Параметр','Значение'],['Роль','Менеджер продаж'],['Старт','1 июня']],
-    full: [['ОПИСАНИЕ РОЛИ',''],['Название должности',''],['Цель роли (зачем нанимаем?)',''],['Ключевые задачи (3-5 штук)',''],['Результат через 90 дней',''],['Требуемые навыки (обязательные)',''],['Требуемые навыки (желательные)',''],['Зарплата (вилка)',''],['Формат работы',''],['Дата выхода',''],['',''],['ВОРОНКА ПОДБОРА','Кол-во / Дата'],['Разместили вакансию',''],['Получили откликов',''],['Провели собеседований',''],['Сделали офферов',''],['Принято',''],['',''],['ОНБОРДИНГ',''],['Первый день (что подготовить)',''],['Испытательный срок (цели)',''],['Ревью через 30 дней','']]  ,
-    hint: 'Заполните описание роли до начала поиска. Чёткое понимание "зачем нанимаем" экономит месяцы и защищает от найма "просто хорошего человека".' },
+    full: [['ОПИСАНИЕ РОЛИ',''],['Название должности',''],['Цель роли (зачем нанимаем?)',''],['Ключевые задачи (3-5 штук)',''],['Результат через 90 дней',''],['Требуемые навыки (обязательные)',''],['Зарплата (вилка)',''],['Формат работы',''],['Дата выхода',''],['',''],['ВОРОНКА ПОДБОРА','Кол-во / Дата'],['Разместили вакансию',''],['Получили откликов',''],['Провели собеседований',''],['Сделали офферов',''],['Принято',''],['',''],['ОНБОРДИНГ',''],['Первый день (что подготовить)',''],['Испытательный срок (цели)',''],['Ревью через 30 дней','']],
+    hint: 'Чёткое понимание "зачем нанимаем" экономит месяцы и защищает от найма "просто хорошего человека".' },
 }
 
 const OWNER_TEMPLATES = [
-  { icon: '📋', name: 'Decision Log', desc: 'Журнал стратегических решений с контекстом, альтернативами и результатами — для ясности и обучения команды' },
-  { icon: '🗺️', name: 'Карта «человек/AI/система»', desc: 'Визуальная карта распределения задач между человеком, AI и автоматическими системами' },
-  { icon: '🚨', name: 'Красные зоны бизнеса', desc: 'Реестр критических зависимостей, узких мест и точек отказа — то, что нельзя игнорировать' },
+  { icon: '📋', name: 'Decision Log', desc: 'Журнал стратегических решений' },
+  { icon: '🗺️', name: 'Карта человек/AI/система', desc: 'Распределение задач между людьми и автоматикой' },
+  { icon: '🚨', name: 'Красные зоны бизнеса', desc: 'Реестр критических зависимостей и точек отказа' },
 ]
 
-const AXIS_NAMES = { K: 'Знания', A: 'Автоматизация', Q: 'Качество', S: 'Масштаб' }
-const AXIS_SUBS  = { K: 'процессы · SOP · метрики', A: 'рутины · AI · ROI', Q: 'KPI · контроль · стандарты', S: 'финансы · найм · рост' }
-const AXIS_COLORS = { K: '#60A5FA', A: '#C084FC', Q: '#4ADE80', S: '#FCD34D' }
-
-const ICONS = {
-  K_registry: `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M7 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2h-2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>`,
-  K_sop:      `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="15" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="18" r="1" fill="currentColor" stroke="none"/></svg>`,
-  K_metrics:  `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
-  K_onboard:  `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>`,
-  A_audit:    `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`,
-  A_roi:      `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
-  A_tools:    `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
-  A_checklist:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
-  Q_kpi:      `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
-  Q_risks:    `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
-  Q_errors:   `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
-  Q_checkpoints:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>`,
-  S_pl:       `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>`,
-  S_cashflow: `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
-  S_raci:     `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
-  S_hire:     `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>`,
+const AXIS_NAMES = { K:'Знания', A:'Автоматизация', Q:'Качество', S:'Масштаб' }
+const AXIS_SUBS  = { K:'Процессы / SOP', A:'AI / Рутина / ROI', Q:'KPI / Стандарты', S:'Финансы / Найм' }
+const AXIS_COLORS = { K:'#60A5FA', A:'#C084FC', Q:'#4ADE80', S:'#FCD34D' }
+const AXIS_BG    = { K:'rgba(96,165,250,.1)', A:'rgba(192,132,252,.1)', Q:'rgba(74,222,128,.1)', S:'rgba(252,211,77,.1)' }
+const AXIS_DESCS = {
+  K: 'Ось Знания отвечает за наличие описанных процессов, регламентов (SOP), системы метрик и онбординга. Низкий балл означает что бизнес работает "в головах" — потеря любого ключевого сотрудника создаёт кризис.',
+  A: 'Ось Автоматизация показывает насколько рутинные задачи автоматизированы. Низкий балл — собственник и команда тратят часы на задачи, которые должен делать инструмент или AI.',
+  Q: 'Ось Качество отвечает за систему KPI, контроль качества и управление рисками. Без этой оси бизнес работает вслепую — проблемы обнаруживаются слишком поздно.',
+  S: 'Ось Масштаб показывает финансовую прозрачность, готовность к найму и способность к росту. Низкий балл означает что текущая конфигурация бизнеса не выдержит x2 роста без коллапса.',
 }
 
+const ICONS = {
+  K_registry:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M7 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2h-2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>`,
+  K_sop:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="15" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="18" r="1" fill="currentColor" stroke="none"/></svg>`,
+  K_metrics:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+  K_onboard:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>`,
+  A_audit:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`,
+  A_roi:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+  A_tools:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
+  A_checklist:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
+  Q_kpi:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  Q_risks:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  Q_errors:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+  Q_checkpoints:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>`,
+  S_pl:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>`,
+  S_cashflow:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
+  S_raci:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
+  S_hire:`<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>`,
+}
 const OWNER_ICONS = [
   `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
   `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="4" cy="12" r="2"/><circle cx="20" cy="12" r="2"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="18" y2="12"/></svg>`,
@@ -1286,267 +758,263 @@ const OWNER_ICONS = [
 ]
 
 function getBarColor(pct) {
-  if (pct < 40) return '#EF4444'
+  if (pct < 40) return '#FF3B30'
   if (pct < 60) return '#F59E0B'
-  if (pct < 80) return '#22C55E'
-  return '#3B82F6'
+  if (pct < 80) return '#30D158'
+  return '#2B79FF'
 }
-
 function getStatus(index) {
-  if (index < 40) return { label: 'Критическая зона', cls: 'low' }
-  if (index < 60) return { label: 'Зона роста', cls: 'mid' }
-  if (index < 80) return { label: 'Зона стабильности', cls: 'good' }
-  return { label: 'Зрелый бизнес', cls: 'good' }
+  if (index < 40) return { label:'Критическая зона', cls:'low', verdict:'Требуется срочное вмешательство' }
+  if (index < 60) return { label:'Зона риска / Оптимизация', cls:'low', verdict:'Требуется вмешательство' }
+  if (index < 80) return { label:'Зона роста', cls:'mid', verdict:'Потенциал раскрыт частично' }
+  return { label:'Зрелый бизнес', cls:'good', verdict:'Система близка к оптимальной' }
 }
 
 let quizData = null
 let roadmapData = null
 
 async function init() {
-  // Load localStorage
   const raw = localStorage.getItem('kaqs_results')
   const history = raw ? JSON.parse(raw) : []
   quizData = history[0] || null
-
   if (!quizData) {
     document.getElementById('loading-screen').classList.add('hidden')
-    setTimeout(() => {
-      document.getElementById('loading-screen').style.display = 'none'
-      showNoData()
-    }, 500)
+    setTimeout(() => { document.getElementById('loading-screen').style.display='none'; showNoData() }, 500)
     return
   }
-
-  // Animate loading steps
-  setStep(1)
-  await delay(600)
-  setStep(2)
-  await delay(700)
+  setStep(1); await delay(600)
+  setStep(2); await delay(700)
   setStep(3)
-
-  // Call API
   try {
     const res = await fetch('/api/generate-roadmap', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: quizData.name, index: quizData.index, scores: quizData.scores }),
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name:quizData.name, index:quizData.index, scores:quizData.scores }),
     })
     const data = await res.json()
     if (!res.ok || data.error) throw new Error(data.error || 'Ошибка API')
-
     roadmapData = data
-    setStep(4)
-    await delay(600)
-
+    setStep(4); await delay(600)
     renderRoadmap()
-
     document.getElementById('loading-screen').classList.add('hidden')
     setTimeout(() => {
-      document.getElementById('loading-screen').style.display = 'none'
+      document.getElementById('loading-screen').style.display='none'
       document.getElementById('roadmap').classList.add('visible')
       document.getElementById('print-bar').classList.add('visible')
-      animateAxes()
+      animateAll()
     }, 500)
-  } catch (e) {
-    document.getElementById('loading-screen').style.display = 'none'
+  } catch(e) {
+    document.getElementById('loading-screen').style.display='none'
     const errScreen = document.getElementById('error-screen')
     errScreen.classList.add('show')
-    document.getElementById('error-msg').textContent = e.message || 'Попробуйте обновить страницу. Если ошибка повторяется — напишите нам.'
+    document.getElementById('error-msg').textContent = e.message || 'Попробуйте обновить страницу.'
   }
 }
 
 function setStep(n) {
-  for (let i = 1; i <= 4; i++) {
-    const el = document.getElementById('ls' + i)
-    if (i < n) { el.className = 'loading-step done'; }
-    else if (i === n) { el.className = 'loading-step active'; }
-    else { el.className = 'loading-step'; }
+  for (let i=1;i<=4;i++) {
+    const el = document.getElementById('ls'+i)
+    if(i<n) el.className='loading-step done'
+    else if(i===n) el.className='loading-step active'
+    else el.className='loading-step'
   }
 }
-
-function delay(ms) { return new Promise(r => setTimeout(r, ms)) }
+function delay(ms){ return new Promise(r=>setTimeout(r,ms)) }
 
 function renderRoadmap() {
-  const d = quizData
-  const r = roadmapData
+  const d = quizData, r = roadmapData
   const status = getStatus(d.index)
-
-  // Cover
-  const scoreColor = getBarColor(d.index)
   const nameStr = d.name || 'Руководитель'
   const dateStr = d.date || new Date().toLocaleDateString('ru-RU')
-  document.getElementById('cv-index').textContent = d.index
-  document.getElementById('cv-index').style.color = scoreColor
+
+  // Hero footer
   document.getElementById('cv-name').textContent = nameStr
-  document.getElementById('cv-name2').textContent = nameStr
   document.getElementById('cv-date').textContent = dateStr
   document.getElementById('cv-profile').textContent = r.profile || '—'
+  document.getElementById('closing-owner').textContent = nameStr
+
+  // Score card
+  const scoreColor = getBarColor(d.index)
+  const scoreEl = document.getElementById('cv-index')
+  scoreEl.textContent = d.index
+  scoreEl.style.color = scoreColor
   const cvStatus = document.getElementById('cv-status')
   cvStatus.className = 'zone-badge ' + status.cls
   document.getElementById('cv-status-text').textContent = status.label
-  setTimeout(() => {
-    const fill = document.getElementById('score-bar-fill')
-    if (fill) {
-      fill.style.background = scoreColor
-      fill.style.width = d.index + '%'
-      fill.style.boxShadow = `0 0 10px ${scoreColor}80`
-    }
-  }, 700)
+  document.getElementById('cv-verdict').textContent = status.verdict
+  document.getElementById('cv-summary').innerHTML = r.summary || ''
+  document.getElementById('cv-potential').textContent = '+' + Math.round((100 - d.index) * 0.82) + '%'
+  document.getElementById('cv-timesave').textContent = Math.max(15, Math.round((100 - d.scores.A) * 0.28)) + 'Ч / НЕД'
 
-  // Axis bars
+  // Fin metric for transformation section
+  document.getElementById('fin-metric').textContent = Math.min(94, d.index + 37) + '/100'
+
+  // Axis grid
   const axisGrid = document.getElementById('axis-grid')
   axisGrid.innerHTML = ''
   ;['K','A','Q','S'].forEach(ax => {
-    const pct = d.scores[ax]
-    const color = getBarColor(pct)
-    const insight = r.axisInsights?.[ax] || ''
+    const pct = d.scores[ax], color = getBarColor(pct)
     axisGrid.innerHTML += `
-      <div class="axis-row">
-        <div class="axis-row-top">
-          <div class="axis-label">
-            <div class="axis-key">${ax}</div>
-            <div class="axis-name">${AXIS_NAMES[ax]} <span>· ${AXIS_SUBS[ax]}</span></div>
+      <div class="axis-card" onclick="openAxisModal('${ax}')">
+        <div class="axis-ghost">${ax}</div>
+        <div class="axis-card-top">
+          <div class="axis-icon-box" style="background:${AXIS_BG[ax]}">
+            <svg width="20" height="20" fill="none" stroke="${AXIS_COLORS[ax]}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">${AXIS_SVG_PATHS[ax]}</svg>
           </div>
-          <div class="axis-pct" style="color:${color}">${pct}%</div>
         </div>
-        <div class="axis-track">
-          <div class="axis-fill" id="af-${ax}" style="background:${color}"></div>
+        <div class="axis-card-name">${AXIS_NAMES[ax]}</div>
+        <div class="axis-card-sub">${AXIS_SUBS[ax]}</div>
+        <div class="axis-card-pct" style="color:${color}">${pct}%</div>
+        <div class="axis-bar-row">
+          <div class="axis-bar-track"><div class="axis-bar-fill" id="af-${ax}" style="background:${color}"></div></div>
+          <span class="axis-efficiency">EFFICIENCY</span>
         </div>
-        ${insight ? `<div class="axis-insight">${insight}</div>` : ''}
       </div>`
   })
-
-  // Profile
-  document.getElementById('profile-name').textContent = r.profile || '—'
-  document.getElementById('profile-summary').textContent = r.summary || ''
 
   // Red zones
   const rzEl = document.getElementById('red-zones')
   rzEl.innerHTML = ''
-  ;(r.redZones || []).forEach((rz, i) => {
+  ;(r.redZones || []).forEach(rz => {
     rzEl.innerHTML += `
-      <div class="red-zone-card">
-        <div class="rz-num">0${i + 1}</div>
-        <div class="rz-body">
-          <div class="rz-title"><span class="rz-accent">↳</span> ${rz.title}</div>
-          <div class="rz-desc">${rz.description}</div>
+      <div class="rz-item">
+        <div class="rz-dot"></div>
+        <div>
+          <div class="rz-item-title">${rz.title}</div>
+          <div class="rz-item-desc">${rz.description}</div>
         </div>
       </div>`
   })
 
-  // Plan — tabbed months
+  // Plan
   const planEl = document.getElementById('plan-container')
   const tabsEl = document.getElementById('month-tabs')
-  planEl.className = ''
-  planEl.innerHTML = ''
-  tabsEl.innerHTML = ''
-  const months = [
-    { num: '01', data: r.month1 },
-    { num: '02', data: r.month2 },
-    { num: '03', data: r.month3 },
-  ]
+  planEl.innerHTML = ''; tabsEl.innerHTML = ''
+  const months = [{num:'01',data:r.month1},{num:'02',data:r.month2},{num:'03',data:r.month3}]
   months.forEach((m, mi) => {
     if (!m.data) return
-    // Tab button
     const tab = document.createElement('button')
-    tab.className = 'month-tab' + (mi === 0 ? ' active' : '')
-    tab.textContent = 'Месяц ' + m.num
+    tab.className = 'month-tab' + (mi===0?' active':'')
+    tab.textContent = 'МЕСЯЦ ' + m.num
     tab.onclick = () => switchTab(mi)
     tabsEl.appendChild(tab)
-    // Panel
-    const tasks = (m.data.tasks || []).map((t, ti) => `
-      <div class="month-task-item">
-        <div class="month-task-num">0${ti + 1}</div>
-        <div class="month-task-body">
-          <div class="month-task-axis tag-${t.axis}">${t.axis} · ${AXIS_NAMES[t.axis]}</div>
-          <div class="month-task-action">${t.action}</div>
-          <div class="month-task-impact">${t.impact}</div>
+
+    const rows = (m.data.tasks||[]).map((t,ti) => `
+      <div class="plan-row">
+        <div class="plan-row-num">0${ti+1}</div>
+        <div class="plan-row-body">
+          <div class="plan-row-title">
+            ${t.action}
+            <span class="plan-axis-dot" style="background:${AXIS_COLORS[t.axis]}"></span>
+          </div>
+          <div class="plan-row-sub">${t.impact}</div>
+        </div>
+        <div class="plan-row-right">
+          <span class="plan-priority">ПРИОРИТЕТ: ВЫСОКИЙ</span>
+          <div class="plan-arrow">↗</div>
         </div>
       </div>`).join('')
-    const axes = (m.data.tasks || []).map(t =>
-      `<span class="mra tag-${t.axis}">${t.axis}</span>`).join('')
+
+    const resultMetrics = (m.data.tasks||[]).map(t =>
+      `<div class="month-result-metric">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        ${AXIS_NAMES[t.axis]} · ${t.axis}
+      </div>`).join('')
+
     const panel = document.createElement('div')
-    panel.className = 'month-panel' + (mi === 0 ? ' active' : '')
+    panel.className = 'month-panel' + (mi===0?' active':'')
     panel.innerHTML = `
-      <div class="month-task-list">${tasks}</div>
+      <div class="plan-rows">${rows}</div>
       <div class="month-result-card">
-        <div class="month-result-crown">👑</div>
-        <div class="month-result-label">Фокус месяца</div>
-        <div class="month-result-title">${m.data.theme || ''}</div>
-        <div class="month-result-axes">${axes}</div>
+        <div class="month-result-crown">♛</div>
+        <div class="month-result-eyebrow">Ожидаемый результат</div>
+        <div class="month-result-title">${m.data.theme||''}</div>
+        <div class="month-result-metrics">${resultMetrics}</div>
       </div>`
     planEl.appendChild(panel)
   })
 
-  // Templates toolkit grid
+  // Toolkit
   const tplEl = document.getElementById('templates-grid')
   tplEl.innerHTML = ''
-  Object.entries(TEMPLATE_CATALOG).forEach(([id, t]) => {
-    const icon = ICONS[id] || ''
-    const axColor = AXIS_COLORS[t.axis]
+  Object.entries(TEMPLATE_CATALOG).forEach(([id,t]) => {
     tplEl.innerHTML += `
       <div class="toolkit-tile" onclick="openModal('${id}')">
-        <div class="toolkit-icon" style="background:${axColor}18;color:${axColor}">${icon}</div>
-        <div class="toolkit-name">${t.name}</div>
+        <div class="toolkit-icon-box">${ICONS[id]||''}</div>
+        <div class="toolkit-label">${t.name}</div>
       </div>`
   })
-  OWNER_TEMPLATES.forEach((t, i) => {
+  OWNER_TEMPLATES.forEach((t,i) => {
     tplEl.innerHTML += `
       <div class="toolkit-tile owner-tile">
-        <div class="toolkit-icon" style="background:rgba(201,168,76,.1);color:var(--gold)">${OWNER_ICONS[i] || ''}</div>
-        <div class="toolkit-name" style="color:var(--gold)">${t.name}</div>
+        <div class="toolkit-icon-box" style="color:var(--gold)">${OWNER_ICONS[i]||''}</div>
+        <div class="toolkit-label" style="color:var(--gold)">${t.name}</div>
       </div>`
   })
 }
 
-function getDefaultTemplates(scores) {
-  const result = []
-  ;['K','A','Q','S'].forEach(ax => {
-    if (scores[ax] < 60) {
-      const keys = Object.keys(TEMPLATE_CATALOG).filter(k => TEMPLATE_CATALOG[k].axis === ax)
-      if (keys[0]) result.push(keys[0])
-      if (keys[1]) result.push(keys[1])
-    }
-  })
-  return result.slice(0, 6)
+const AXIS_SVG_PATHS = {
+  K:`<circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 000 11.4M17.7 6.3a8 8 0 010 11.4M3 12H1M23 12h-2M12 3V1M12 23v-2"/>`,
+  A:`<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v3M9 15h6"/>`,
+  Q:`<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>`,
+  S:`<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>`,
 }
 
-function animateAxes() {
+function animateAll() {
   if (!quizData) return
+  // Gauge
+  setTimeout(() => {
+    const circ = 565.5, arcMax = 424
+    const fill = arcMax * quizData.index / 100
+    const arc = document.getElementById('gauge-arc')
+    if (arc) arc.style.strokeDasharray = `${fill} ${circ}`
+  }, 400)
+  // Axis bars
   setTimeout(() => {
     ;['K','A','Q','S'].forEach(ax => {
       const el = document.getElementById('af-' + ax)
       if (el) el.style.width = quizData.scores[ax] + '%'
     })
-  }, 200)
+  }, 600)
 }
-
-function showNoData() {
-  document.body.innerHTML += `
-    <div style="padding:24px">
-      <div class="no-data-box">
-        <div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--blue);margin-bottom:16px;">K-A-Q-S™</div>
-        <div class="no-data-title">Результаты диагностики не найдены</div>
-        <div class="no-data-desc">Для генерации Roadmap необходимо пройти диагностику. Если вы уже проходили её — возможно, сменили браузер или устройство.</div>
-        <a href="kaqs-quiz.html" class="btn-go">Пройти диагностику →</a>
-      </div>
-    </div>`
-}
-
-function retryGenerate() {
-  document.getElementById('error-screen').classList.remove('show')
-  document.getElementById('loading-screen').style.display = 'flex'
-  document.getElementById('loading-screen').classList.remove('hidden')
-  init()
-}
-
-let currentModalId = null
 
 function switchTab(n) {
-  document.querySelectorAll('.month-tab').forEach((t, i) => t.classList.toggle('active', i === n))
-  document.querySelectorAll('.month-panel').forEach((p, i) => p.classList.toggle('active', i === n))
+  document.querySelectorAll('.month-tab').forEach((t,i) => t.classList.toggle('active', i===n))
+  document.querySelectorAll('.month-panel').forEach((p,i) => p.classList.toggle('active', i===n))
 }
 
+// AXIS MODAL
+function openAxisModal(ax) {
+  if (!quizData) return
+  const pct = quizData.scores[ax]
+  const color = getBarColor(pct)
+  const insight = roadmapData?.axisInsights?.[ax] || 'Анализ данных по этой оси...'
+
+  const iconBox = document.getElementById('am-icon-box')
+  iconBox.style.background = AXIS_BG[ax]
+  iconBox.innerHTML = `<svg width="24" height="24" fill="none" stroke="${AXIS_COLORS[ax]}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">${AXIS_SVG_PATHS[ax]}</svg>`
+
+  document.getElementById('am-name').textContent = AXIS_NAMES[ax]
+  document.getElementById('am-sub').textContent = AXIS_SUBS[ax]
+  document.getElementById('am-score').textContent = pct + '%'
+  document.getElementById('am-score').style.color = color
+  document.getElementById('am-insight').textContent = insight
+  document.getElementById('am-info').innerHTML = `<p>${AXIS_DESCS[ax]}</p>`
+
+  const fill = document.getElementById('am-fill')
+  fill.style.background = color
+  fill.style.width = '0'
+  setTimeout(() => { fill.style.transition = 'width 1s cubic-bezier(.16,1,.3,1)'; fill.style.width = pct + '%' }, 50)
+
+  document.getElementById('axis-modal-overlay').classList.add('open')
+  document.body.style.overflow = 'hidden'
+}
+function closeAxisModal() {
+  document.getElementById('axis-modal-overlay').classList.remove('open')
+  document.body.style.overflow = ''
+}
+
+// TEMPLATE MODAL
+let currentModalId = null
 function openModal(id) {
   const t = TEMPLATE_CATALOG[id]
   if (!t) return
@@ -1556,21 +1024,22 @@ function openModal(id) {
   document.getElementById('modal-hint').textContent = t.hint || ''
   const tableEl = document.getElementById('modal-table')
   if (t.full && t.full.length > 1) {
-    const [hdrs, ...rows] = t.full
-    const headHtml = '<thead><tr>' + hdrs.map(h => `<th>${h}</th>`).join('') + '</tr></thead>'
+    const [hdrs,...rows] = t.full
+    const headHtml = '<thead><tr>' + hdrs.map(h=>`<th>${h}</th>`).join('') + '</tr></thead>'
     const bodyHtml = '<tbody>' + rows.map(row => {
-      const isEmpty = row.every(c => !c)
-      const cells = row.map(c => `<td contenteditable="true">${c}</td>`).join('')
-      return `<tr${isEmpty ? ' class="empty-row"' : ''}>${cells}</tr>`
+      const isEmpty = row.every(c=>!c)
+      const cells = row.map(c=>`<td contenteditable="true">${c}</td>`).join('')
+      return `<tr${isEmpty?' class="empty-row"':''}>${cells}</tr>`
     }).join('') + '</tbody>'
     tableEl.innerHTML = headHtml + bodyHtml
-  } else {
-    tableEl.innerHTML = ''
-  }
+  } else { tableEl.innerHTML = '' }
   document.getElementById('modal-overlay').classList.add('open')
   document.body.style.overflow = 'hidden'
 }
-
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open')
+  document.body.style.overflow = ''
+}
 function downloadCSV() {
   const t = currentModalId ? TEMPLATE_CATALOG[currentModalId] : null
   const table = document.getElementById('modal-table')
@@ -1578,27 +1047,39 @@ function downloadCSV() {
   const rows = []
   table.querySelectorAll('tr').forEach(tr => {
     const cells = []
-    tr.querySelectorAll('th, td').forEach(cell => {
-      const val = cell.textContent.replace(/"/g, '""')
-      cells.push(`"${val}"`)
-    })
+    tr.querySelectorAll('th,td').forEach(cell => cells.push(`"${cell.textContent.replace(/"/g,'""')}"`) )
     rows.push(cells.join(','))
   })
   const csv = '﻿' + rows.join('\r\n')
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'})
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)
-  a.download = (t ? t.name : 'template') + '.csv'
+  a.download = (t?t.name:'template') + '.csv'
   a.click()
   URL.revokeObjectURL(a.href)
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open')
-  document.body.style.overflow = ''
+function showNoData() {
+  document.body.innerHTML += `
+    <div style="padding:24px">
+      <div class="no-data-box">
+        <div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--blue);margin-bottom:16px">K-A-Q-S™</div>
+        <div class="no-data-title">Результаты диагностики не найдены</div>
+        <div class="no-data-desc">Для генерации Roadmap необходимо пройти диагностику. Если вы уже проходили её — возможно, сменили браузер или устройство.</div>
+        <a href="kaqs-quiz.html" class="btn-go">Пройти диагностику →</a>
+      </div>
+    </div>`
+}
+function retryGenerate() {
+  document.getElementById('error-screen').classList.remove('show')
+  document.getElementById('loading-screen').style.display='flex'
+  document.getElementById('loading-screen').classList.remove('hidden')
+  init()
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') { closeModal(); closeAxisModal() }
+})
 
 init()
 </script>
